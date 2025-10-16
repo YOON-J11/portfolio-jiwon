@@ -9,10 +9,7 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
 
     <link rel="stylesheet" href="./css/reset.css">
-    <link rel="stylesheet" href="./css/main.css">
-
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
@@ -20,8 +17,9 @@
         <button class="menu-btn" aria-label="Menu">
             <span></span>
             <span></span>
-            <span></span>
         </button>
+
+        <div class="nav-dim" hidden></div>
 
         <nav class="gnb">
             <ul>
@@ -37,7 +35,12 @@
     <main>
         <!-- 표지 -->
         <div id="cover" class="container container-cover">
-            
+            <p>Hello, this is Ji Won Yoon’s Web Publisher Portfolio.</p>
+            <div class="title">
+                <h1>BREATHING <span class="accent">LIFE</span></h1>
+                <h1>INTO THE</h1>
+                <div><h1>DIGITAL <span class="muted">VOID</span></h1><button>CONTACT</button></div>
+            </div>
         </div>
 
         <!-- 소개 / 스택 / 경력 -->
@@ -59,8 +62,8 @@
     <footer class="site-footer">
         <p>© 2025 JIWON Yoon</p>
     </footer>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script> AOS.init(); </script>
+    <!-- Lenis 라이브러리 -->
+    <script src="https://unpkg.com/@studio-freight/lenis@latest/dist/lenis.min.js"></script>
     <script defer src="./js/main.js"></script>
 </body>
 

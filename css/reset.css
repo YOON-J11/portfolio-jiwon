@@ -43,9 +43,10 @@ body {
   line-height: 1.5;
   margin: 0;
   padding: 0;
+  
+  height: 100%;
+  overflow: hidden;
 }
-
-html { scrollbar-gutter: stable; }
 
 /* HTML5 요소를 블록화 (구형 브라우저 대응) */
 article, aside, details, figcaption, figure,
