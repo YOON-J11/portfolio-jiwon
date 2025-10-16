@@ -1,4 +1,4 @@
-# 📁 Portfolio — JIWON Yoon
+# 📁 JIWON Portfolio
 
 웹 퍼블리셔로서의 작업물과 디자인, 클론 코딩, 그리고 실제 프로젝트 경험을 담은 개인 포트폴리오입니다.  
 UX/UI 디자인부터 웹 퍼블리싱, 간단한 개발까지 직접 진행한 작업들을 한곳에 모았습니다.
@@ -32,6 +32,6 @@ UX/UI 디자인부터 웹 퍼블리싱, 간단한 개발까지 직접 진행한 
 ## 📬 Contact
 
 - **Name**: 윤지원  
-- **Email**: your_email@example.com  
-- **GitHub**: [https://github.com/your-id](https://github.com/your-id)  
-- **Portfolio Site**: [https://your-portfolio-url.com](https://your-portfolio-url.com)
+- **Email**: yjw5619@gmail.com
+- **GitHub**: [https://github.com/your-id](https://github.com/YOON-J11)  
+- **Portfolio Site**: 준비중
