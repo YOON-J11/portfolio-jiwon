@@ -2,6 +2,13 @@
 body {
   background-color: #161616;
 }
+body .site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2000;
+}
 
 /*헤더*/
 .site-header {
@@ -52,14 +59,13 @@ body {
 }
 .site-header .gnb {
   background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
   border-left: 1px solid rgba(255, 255, 255, 0.15);
   padding: 40px;
   position: fixed;
   top: 0;
   right: 0;
-  width: 50vw;
+  width: 100%;
+  max-width: 650px;
   height: 100vh;
   transform: translateX(100%);
   transition: transform 0.5s ease;
@@ -75,35 +81,80 @@ body {
 
 /* 컨테이너 공통*/
 .container {
-  width: 100vw;
-  height: 100vw;
+  width: 100%;
+  height: 100svh;
   padding: 40px;
 }
 
 .container-cover {
   color: #EDEDED;
+  position: relative;
 }
 .container-cover p {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 40px;
   font-size: 14px;
   writing-mode: vertical-rl;
   text-orientation: mixed;
 }
-.container-cover .title h1 {
+.container-cover .container-cover-inner {
+  max-width: 1450px;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.container-cover .container-cover-inner .title {
+  margin-left: 40px;
+}
+.container-cover .container-cover-inner .title h1 {
   font-size: 100px;
   font-weight: 600;
   line-height: 1;
 }
-.container-cover .title h1 .accent {
+.container-cover .container-cover-inner .title h1 .accent {
   color: #00FFB7;
   font-weight: 700;
 }
-.container-cover .title h1 .muted {
+.container-cover .container-cover-inner .title h1 .muted {
   color: #999999;
 }
-.container-cover .title button {
+.container-cover .container-cover-inner .title h1:nth-child(2) {
+  margin-left: 40px;
+}
+.container-cover .container-cover-inner .title div {
+  margin-left: 80px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.container-cover .container-cover-inner .title div button {
   background-color: #999999;
   color: #161616;
-  font-size: 18px;
-  padding: 8px 24px;
+  font-size: 16px;
+  line-height: 1;
+  padding: 8px 16px;
   border-radius: 50px;
+  flex: 0 0 auto;
+  cursor: pointer;
+  animation: moveX 1.5s ease infinite;
+}
+.container-cover .container-cover-inner .title div button:hover {
+  background-color: #00FFB7;
+}
+
+/* 좌우 무한 반복 애니메이션 */
+@keyframes moveX {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }/*# sourceMappingURL=style.css.map */
