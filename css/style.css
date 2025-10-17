@@ -103,12 +103,15 @@ body .site-header {
   max-width: 1450px;
   height: 100%;
   margin: 0 auto;
+  position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
 .container-cover .container-cover-inner .title {
   margin-left: 40px;
+  transform: translateY(-40%);
 }
 .container-cover .container-cover-inner .title h1 {
   font-size: 100px;
@@ -144,6 +147,16 @@ body .site-header {
 }
 .container-cover .container-cover-inner .title div button:hover {
   background-color: #00FFB7;
+}
+.container-cover .container-cover-inner .lottie-scroll-down {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 120px;
+  z-index: 1;
+  pointer-events: none;
 }
 
 /* 좌우 무한 반복 애니메이션 */

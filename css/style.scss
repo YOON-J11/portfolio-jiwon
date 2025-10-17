@@ -127,12 +127,16 @@ body {
         height: 100%;
         margin: 0 auto;
 
+        position: relative;
+        z-index: 2;
+
         display: flex;
         align-items: center;
         justify-content: flex-start;
 
         .title {
             margin-left: 40px;
+            transform: translateY(-40%);
 
             h1 {
                 font-size: 100px;
@@ -178,6 +182,19 @@ body {
                 }
             }
         }
+
+        .lottie-scroll-down {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 120px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+
 
     }
 }
