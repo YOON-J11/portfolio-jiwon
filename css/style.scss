@@ -185,13 +185,14 @@ body {
 
         .lottie-scroll-down {
             position: absolute;
-            bottom: 10px;
+            bottom: -10px;
             left: 50%;
             transform: translateX(-50%);
-            width: 120px;
-            height: 120px;
-            z-index: 1;
-            pointer-events: none;
+            width: 100px;
+            height: 100px;
+            z-index: 2;
+            pointer-events: auto;
+            cursor: pointer;
         }
 
 
