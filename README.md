@@ -35,5 +35,5 @@ UX/UI 디자인부터 웹 퍼블리싱, 간단한 개발까지 직접 진행한 
 
 - **Name**: 윤지원  
 - **Email**: yjw5619@gmail.com
-- **GitHub**: [https://github.com/your-id](https://github.com/YOON-J11)  
+- **GitHub**: [https://github.com/YOON-J11](https://github.com/YOON-J11)  
 - **Portfolio Site**: 준비중

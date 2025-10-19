@@ -1,4 +1,6 @@
 $color-bg: #161616;
+//$color-bg: #2121216; 배경색상 보류
+//$color-bg: #0D1117; 배경색상 보류
 $color-text: #EDEDED;
 $color-accent: #00FFB7;
 $color-muted: #999999;
@@ -435,7 +437,7 @@ body {
                     justify-content: center;
                     gap: 15px;
 
-                    min-height: 130px;
+                    min-height: 132px;
                     align-content: flex-start;
 
                     .stack-badge {
@@ -496,6 +498,11 @@ body {
         .about-experience {
             background-color: rgba(105, 105, 105, 0.364);
             margin-bottom: 0;
+
+            .experience-inner {
+                width: 100%;
+                max-width: 1047px;
+            }
         }
     }
 

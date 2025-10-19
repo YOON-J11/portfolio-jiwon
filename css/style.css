@@ -351,7 +351,7 @@ body .site-header {
   flex-wrap: wrap;
   justify-content: center;
   gap: 15px;
-  min-height: 130px;
+  min-height: 132px;
   align-content: flex-start;
 }
 .container-about .about-scroll .about-stack .stack-inner .stack-badges .stack-badge {
@@ -389,4 +389,8 @@ body .site-header {
 .container-about .about-scroll .about-experience {
   background-color: rgba(105, 105, 105, 0.364);
   margin-bottom: 0;
+}
+.container-about .about-scroll .about-experience .experience-inner {
+  width: 100%;
+  max-width: 1047px;
 }/*# sourceMappingURL=style.css.map */

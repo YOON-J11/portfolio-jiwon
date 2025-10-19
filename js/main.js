@@ -198,12 +198,10 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
   window.addEventListener('load', () => { activeIndex = detectIndexByCenter(); });
 })();
 
-// About 내부 스냅
 (() => {
   const aboutWrapper = document.querySelector('.about-scroll');
   if (!aboutWrapper) return;
 
-  // 내부 콘텐츠 래퍼 구성
   let aboutContent = aboutWrapper.querySelector('.about-scroll-content');
   if (!aboutContent) {
     aboutContent = document.createElement('div');
@@ -212,7 +210,6 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
     aboutWrapper.appendChild(aboutContent);
   }
 
-  // margin 대신 gap 사용
   Object.assign(aboutContent.style, { display: 'flex', flexDirection: 'column', rowGap: '40px' });
   aboutContent.querySelectorAll('.about-panel').forEach(p => { p.style.margin = '0'; });
 
@@ -228,7 +225,6 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
   };
   const getWrapRect = () => aboutWrapper.getBoundingClientRect();
 
-  // 현재 뷰 중앙 기준 가장 가까운 패널
   const panelIndexByView = () => {
     const mid = getWrapRect().top + getWrapRect().height / 2;
     let best = 0, dist = Infinity;
@@ -241,7 +237,6 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
     return best;
   };
 
-  // 상/하 경계
   const isAtTop = () => {
     const padTop = getPad().top;
     const firstTop = panels[0].getBoundingClientRect().top;
@@ -270,7 +265,6 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
   }
   window.snapToAboutPanel = snapToPanel;
 
-  // 바깥 컨테이너 인덱스
   const containerIndexByCenter = () => {
     const mid = window.scrollY + innerHeight / 2;
     const containers = [...document.querySelectorAll('.container')];
@@ -283,17 +277,38 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
     return best;
   };
 
-  // 내부 휠 누적(시간창)
   let innerAccAbs = 0, innerAccSigned = 0, innerFirstSign = 0, innerLastTs = 0;
 
-  // 휠 스냅
+  function canScrollMoreDown() {
+    const wrap = aboutWrapper;
+    return (wrap.scrollHeight - wrap.clientHeight - wrap.scrollTop) > 1;
+  }
+  function canScrollMoreUp() {
+    const wrap = aboutWrapper;
+    return wrap.scrollTop > 1;
+  }
+
   const wheelHandler = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
     if (SNAP_LOCK || IS_SNAPPING) return;
 
-    const now = performance.now(), delta = normWheelDelta(e);
+    const now = performance.now();
+    const delta = normWheelDelta(e);
     if (delta === 0) return;
+
+    // 현재 보이는 패널 인덱스
+    const cur = panelIndexByView();
+    const isLast = (cur >= panels.length - 1);
+    const isFirst = (cur <= 0);
+
+    if (delta > 0 && isLast && canScrollMoreDown()) {
+      return;
+    }
+    if (delta < 0 && isFirst && canScrollMoreUp()) {
+      return;
+    }
+
+    e.preventDefault();
+    e.stopPropagation();
 
     if (now - innerLastTs > ACC_WINDOW_MS) { innerAccAbs = 0; innerAccSigned = 0; innerFirstSign = 0; }
     innerLastTs = now;
@@ -310,26 +325,28 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
 
     innerAccAbs = 0; innerAccSigned = 0; innerFirstSign = 0; innerLastTs = 0;
 
-    const cur = panelIndexByView();
-
     if (dir > 0) {
-      if (isAtBottom() && cur >= panels.length - 1) {
+      if (isAtBottom() && isLast) {
         aboutWrapper.blur();
         const outerCur = containerIndexByCenter();
         window.snapToContainer?.(outerCur + 1);
       } else {
-        snapToPanel(Math.min(cur + 1, panels.length - 1));
+        // 마지막 패널이면 cur+1이 cur와 같아지는 문제 방지용 가드
+        const next = Math.min(cur + 1, panels.length - 1);
+        if (next !== cur) snapToPanel(next);
       }
     } else {
-      if (isAtTop() && cur <= 0) {
+      if (isAtTop() && isFirst) {
         aboutWrapper.blur();
         const outerCur = containerIndexByCenter();
         window.snapToContainer?.(outerCur - 1);
       } else {
-        snapToPanel(Math.max(cur - 1, 0));
+        const prev = Math.max(cur - 1, 0);
+        if (prev !== cur) snapToPanel(prev);
       }
     }
   };
+
   aboutWrapper.addEventListener('wheel', wheelHandler, { passive: false });
 
   // 키보드 스냅
@@ -433,24 +450,24 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
 
 
 //stack tab
-(function(){
-  const tab    = document.querySelector('.about-stack .stack-tab');
-  const ind    = tab.querySelector('.stack-tab-activebg');
-  const btns   = [...tab.querySelectorAll('.stack-tab-button')];
+(function () {
+  const tab = document.querySelector('.about-stack .stack-tab');
+  const ind = tab.querySelector('.stack-tab-activebg');
+  const btns = [...tab.querySelectorAll('.stack-tab-button')];
   const badges = document.querySelector('.about-stack .stack-badges');
 
   const padL = parseFloat(getComputedStyle(tab).paddingLeft) || 0;
 
-  function moveIndicator(btn){
+  function moveIndicator(btn) {
     const x = btn.offsetLeft - padL;
     ind.style.width = btn.offsetWidth + 'px';
     ind.style.transform = `translateX(${x}px)`;
   }
 
-  function setActiveButton(targetBtn){
+  function setActiveButton(targetBtn) {
     btns.forEach(b => b.classList.toggle('active-button', b === targetBtn));
   }
-  function applyFilter(filter){ badges.setAttribute('data-filter', filter); }
+  function applyFilter(filter) { badges.setAttribute('data-filter', filter); }
 
   const initial = btns.find(b => b.classList.contains('active-button')) || btns[0];
   moveIndicator(initial);
