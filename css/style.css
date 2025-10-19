@@ -11,8 +11,30 @@
     transform: translateX(0);
   }
 }
+/* 배경흐름 무한반복 */
+@keyframes bg-repeat {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-33.33%, 0, 0);
+  }
+}
+/* 달 움직임 */
+@keyframes moon-tilt {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-10deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
 body {
   background-color: #161616;
+  color: #EDEDED;
 }
 body .site-header {
   position: fixed;
@@ -49,7 +71,6 @@ body .site-header {
 .site-header .menu-btn span {
   width: 32px;
   height: 2px;
-  background-color: #EDEDED;
   transition: all 0.2s ease;
   border-radius: 1px;
 }
@@ -99,13 +120,40 @@ body .site-header {
 .container {
   width: 100%;
   height: 100svh;
+  position: relative;
+}
+.container .background-text {
+  position: absolute;
+  top: 3%;
+  z-index: 0;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  overflow: hidden;
+}
+.container .background-text h1 {
+  display: inline-block;
+  opacity: 0.05;
+  font-size: clamp(72px, 10vw, 250px);
+  font-weight: 800;
+  white-space: nowrap;
+  will-change: transform;
+  transform: translateZ(0);
+  animation: bg-repeat 30s linear infinite;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.container .background-text h1::after {
+  content: attr(data-text) attr(data-text);
+  padding-left: 1ch;
 }
 
 /* 컨테이너 cover */
 .container-cover {
   padding: 40px;
-  color: #EDEDED;
-  position: relative;
 }
 .container-cover p {
   position: absolute;
@@ -177,15 +225,17 @@ body .site-header {
   cursor: pointer;
 }
 
+/* 컨테이너 about */
 .container-about {
   height: 100svh;
   overflow: hidden;
+  position: relative;
 }
 .container-about .about-scroll {
   height: 100%;
   overflow: hidden;
   padding: 40px;
-  background-color: #EDEDED;
+  background-color: rgba(237, 237, 237, 0.4823529412);
 }
 .container-about .about-scroll .about-panel {
   min-height: calc(100svh - 80px);
@@ -195,12 +245,56 @@ body .site-header {
   margin-bottom: 40px;
 }
 .container-about .about-scroll .about-intro {
-  background-color: bisque;
+  background-color: rgba(195, 119, 27, 0.393);
+}
+.container-about .about-scroll .about-intro .intro-inner {
+  width: 100%;
+  max-width: 1450px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 5vw;
+  align-items: center;
+}
+.container-about .about-scroll .about-intro .intro-inner .intro-img-area {
+  margin-left: 10vw;
+  position: relative;
+  display: inline-block;
+}
+.container-about .about-scroll .about-intro .intro-inner .intro-img-area .moon {
+  width: 235px;
+  display: block;
+  z-index: 1;
+  animation: moon-tilt 7s ease-in-out infinite;
+  transform-origin: center;
+}
+.container-about .about-scroll .about-intro .intro-inner .intro-img-area .lottie-astronaut {
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 220px;
+  z-index: 2;
+}
+.container-about .about-scroll .about-intro .intro-inner .intro-text-area h1 {
+  font-size: 45px;
+  line-height: 1.2;
+  font-weight: 800;
+  margin-bottom: 35px;
+}
+.container-about .about-scroll .about-intro .intro-inner .intro-text-area h2 {
+  color: #00FFB7;
+  font-weight: 600;
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+.container-about .about-scroll .about-intro .intro-inner .intro-text-area p {
+  font-size: 18px;
+  line-height: 2;
 }
 .container-about .about-scroll .about-stack {
-  background-color: chartreuse;
+  background-color: rgba(128, 255, 0, 0.148);
 }
 .container-about .about-scroll .about-experience {
-  background-color: dimgray;
+  background-color: rgba(105, 105, 105, 0.364);
   margin-bottom: 0;
 }/*# sourceMappingURL=style.css.map */

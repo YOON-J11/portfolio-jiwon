@@ -10,6 +10,9 @@ function raf(t) {
 }
 requestAnimationFrame(raf);
 
+
+
+
 // 별 배경(tsParticles) 초기화
 document.addEventListener("DOMContentLoaded", async () => {
   if (window.loadStarsPreset) {
@@ -40,6 +43,28 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
   await tsParticles.load({ id: "particles-js", options });
 });
+
+
+
+
+// lotti 애니메이션 이미지
+lottie.loadAnimation({//스크롤다운이미지
+  container: document.getElementById('lottie-scroll-down'),
+  renderer: 'svg',
+  loop: true,
+  autoplay: true,
+  path: './assets/lottie/scroll-down-animation.json'
+});
+lottie.loadAnimation({//우주인이미지
+  container: document.getElementById('lottie-astronaut'),
+  renderer: 'svg',
+  loop: true,
+  autoplay: true,
+  path: './assets/lottie/astronaut.json'
+});
+
+
+
 
 // 바운스 방지
 document.documentElement.style.overscrollBehavior = 'none';

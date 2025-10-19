@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/style.css">
     <!-- Lottie -->
-    <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.8.5/dist/dotlottie-wc.js" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lottie-web/build/player/lottie.min.js"></script>
 
 </head>
 
@@ -47,15 +47,43 @@
                     <div><h1>DIGITAL <span class="muted">VOID</span></h1><button>CONTACT</button></div>
                 </div>
                 <a href="#about" class="scroll-down-link">
-                    <dotlottie-wc src="https://lottie.host/39ee7aed-f9ad-4438-8b71-a5e315764734/41XsjwRj2i.lottie" class="lottie-scroll-down" autoplay loop></dotlottie-wc>
+                    <div id="lottie-scroll-down" class="lottie-scroll-down"></div>
                 </a>
             </div>
         </div>
 
         <!-- 소개 / 스택 / 경력 -->
         <div id="about" class="container container-about">
+            <div class="background-text">
+                <h1 data-text="ABOUT ME&nbsp;">
+                    ABOUT ME&nbsp;
+                </h1>
+            </div>
             <div class="about-scroll" data-lenis-prevent tabindex="0">
-                <section class="about-panel about-intro" id="about-intro"></section>
+                <section class="about-panel about-intro" id="about-intro">
+                    <div class="intro-inner">
+                        <div class="intro-img-area">
+                            <img src="./assets/img/moon.svg" class="moon">
+                            <div id="lottie-astronaut" class="lottie-astronaut"></div>
+                        </div>
+                        <div class="intro-text-area">
+                            <h1>
+                                안녕하세요! <br />
+                                웹퍼블리셔 윤지원입니다.
+                            </h1>
+                            <h2>디테일을 살리고, 끝까지 완성하는</h2>
+                            <p>
+                                저는 웹디자인과 UX/UI 디자인을 경험하며, 사용자 중심의 화면을 만들어왔습니다.<br />
+                                작은 부분도 놓치지 않으려는 꼼꼼함과 끝까지 책임감을 다하는 태도로 일을 해왔고,<br />
+                                일을 정리하고 체계적으로 진행하는 걸 선호해 함께 일할 때 안정적이라고 평가받곤 합니다.<br /><br />
+                                최근엔 풀스택 개발과정을 밟으며 웹이 어떻게 만들어지는지 전반적인 흐름을 이해하게 되었습니다.<br />
+                                이 경험 덕분에 단순히 화면을 구현하는 것을 넘어, 개발자와의 협업 과정에서도<br />
+                                서로의 관점을 이해하고 소통할 수 있는 기반을 갖추게 되었다 생각합니다.<br /><br />
+                                지금까지의 디자인 경험과 퍼블리싱 기술을 살려 더 완성도 높은 웹사이트를 만들어가고 싶습니다.<br />
+                            </p>
+                        </div>
+                    </div>
+                </section>
                 <section class="about-panel about-stack" id="about-stack"></section>
                 <section class="about-panel about-experience" id="about-experience"></section>
             </div>
@@ -63,12 +91,16 @@
 
 
         <!-- 프로젝트 / 퍼블리싱 / 디자인 -->
-        <div id="works" class="container container-works" style="background-color: azure;">
-            
+        <div id="works" class="container container-works" style="background-color: rgba(240, 255, 255, 0.202);">
+            <div class="background-text">
+                <h1 data-text="PORTFOLIO SHOWCASE&nbsp;">
+                    PORTFOLIO SHOWCASE&nbsp;
+                </h1>
+            </div>
         </div>
 
         <!-- 컨택트 -->
-        <div id="contact" class="container container-contact" style="background-color: rgb(162, 170, 167);">
+        <div id="contact" class="container container-contact" style="background-color: rgba(162, 170, 167, 0.224);">
         
         </div>
     </main>
