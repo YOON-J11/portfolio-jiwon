@@ -429,3 +429,40 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
     handleHashNav(e, href);
   });
 })();
+
+
+
+//stack tab
+(function(){
+  const tab    = document.querySelector('.about-stack .stack-tab');
+  const ind    = tab.querySelector('.stack-tab-activebg');
+  const btns   = [...tab.querySelectorAll('.stack-tab-button')];
+  const badges = document.querySelector('.about-stack .stack-badges');
+
+  const padL = parseFloat(getComputedStyle(tab).paddingLeft) || 0;
+
+  function moveIndicator(btn){
+    const x = btn.offsetLeft - padL;
+    ind.style.width = btn.offsetWidth + 'px';
+    ind.style.transform = `translateX(${x}px)`;
+  }
+
+  function setActiveButton(targetBtn){
+    btns.forEach(b => b.classList.toggle('active-button', b === targetBtn));
+  }
+  function applyFilter(filter){ badges.setAttribute('data-filter', filter); }
+
+  const initial = btns.find(b => b.classList.contains('active-button')) || btns[0];
+  moveIndicator(initial);
+  applyFilter(initial.dataset.filter);
+
+  btns.forEach(btn => btn.addEventListener('click', () => {
+    setActiveButton(btn);
+    moveIndicator(btn);
+    applyFilter(btn.dataset.filter);
+  }));
+
+  const recalc = () => moveIndicator(btns.find(b => b.classList.contains('active-button')) || btns[0]);
+  window.addEventListener('resize', recalc);
+  window.addEventListener('load', recalc);
+})();

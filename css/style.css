@@ -73,6 +73,7 @@ body .site-header {
   height: 2px;
   transition: all 0.2s ease;
   border-radius: 1px;
+  background-color: #EDEDED;
 }
 .site-header .menu-btn:hover span:nth-child(1) {
   transform: rotate(8deg);
@@ -136,7 +137,7 @@ body .site-header {
 }
 .container .background-text h1 {
   display: inline-block;
-  opacity: 0.05;
+  opacity: 0.015;
   font-size: clamp(72px, 10vw, 250px);
   font-weight: 800;
   white-space: nowrap;
@@ -235,7 +236,6 @@ body .site-header {
   height: 100%;
   overflow: hidden;
   padding: 40px;
-  background-color: rgba(237, 237, 237, 0.4823529412);
 }
 .container-about .about-scroll .about-panel {
   min-height: calc(100svh - 80px);
@@ -244,8 +244,16 @@ body .site-header {
   justify-content: center;
   margin-bottom: 40px;
 }
-.container-about .about-scroll .about-intro {
-  background-color: rgba(195, 119, 27, 0.393);
+.container-about .about-scroll .about-panel .about-title {
+  text-align: center;
+}
+.container-about .about-scroll .about-panel .about-title h1 {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.container-about .about-scroll .about-panel .about-title p {
+  font-size: 18px;
 }
 .container-about .about-scroll .about-intro .intro-inner {
   width: 100%;
@@ -267,6 +275,7 @@ body .site-header {
   z-index: 1;
   animation: moon-tilt 7s ease-in-out infinite;
   transform-origin: center;
+  opacity: 0.5;
 }
 .container-about .about-scroll .about-intro .intro-inner .intro-img-area .lottie-astronaut {
   position: absolute;
@@ -291,8 +300,91 @@ body .site-header {
   font-size: 18px;
   line-height: 2;
 }
-.container-about .about-scroll .about-stack {
-  background-color: rgba(128, 255, 0, 0.148);
+.container-about .about-scroll .about-stack .stack-inner {
+  width: 100%;
+  max-width: 660px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.container-about .about-scroll .about-stack .stack-inner .stack-tab {
+  flex: 0 0 auto;
+  width: auto;
+  align-self: center;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 8px;
+  border: 1px solid #00FFB7;
+  border-radius: 30px;
+  display: flex;
+  gap: 9px;
+  position: relative;
+}
+.container-about .about-scroll .about-stack .stack-inner .stack-tab .stack-tab-activebg {
+  display: block;
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  height: calc(100% - 16px);
+  width: 0;
+  border-radius: 19px;
+  transform: translateX(0);
+  transition: transform 0.3s ease, width 0.3s ease;
+  z-index: 0;
+  background-color: #00FFB7;
+}
+.container-about .about-scroll .about-stack .stack-inner .stack-tab .stack-tab-button {
+  color: #EDEDED;
+  font-size: 18px;
+  line-height: 1;
+  padding: 10px;
+  border-radius: 19px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+.container-about .about-scroll .about-stack .stack-inner .stack-tab .stack-tab-button.active-button {
+  color: #161616;
+}
+.container-about .about-scroll .about-stack .stack-inner .stack-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  min-height: 130px;
+  align-content: flex-start;
+}
+.container-about .about-scroll .about-stack .stack-inner .stack-badges .stack-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 9px 6px 8px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+.container-about .about-scroll .about-stack .stack-inner .stack-badges .stack-badge img {
+  width: 20px;
+  height: auto;
+}
+.container-about .about-scroll .about-stack .stack-inner .stack-badges .stack-badge p {
+  font-size: 18px;
+  line-height: 1;
+}
+.container-about .about-scroll .about-stack .stack-inner .stack-badges[data-filter=all] .stack-badge {
+  display: inline-flex;
+}
+.container-about .about-scroll .about-stack .stack-inner .stack-badges[data-filter=publishing] .stack-badge:not([data-category~=publishing]) {
+  display: none;
+}
+.container-about .about-scroll .about-stack .stack-inner .stack-badges[data-filter=design] .stack-badge:not([data-category~=design]) {
+  display: none;
+}
+.container-about .about-scroll .about-stack .stack-inner .stack-badges[data-filter=tools] .stack-badge:not([data-category~=tools]) {
+  display: none;
+}
+.container-about .about-scroll .about-stack .stack-inner .stack-badges[data-filter=etc] .stack-badge:not([data-category~=etc]) {
+  display: none;
 }
 .container-about .about-scroll .about-experience {
   background-color: rgba(105, 105, 105, 0.364);
