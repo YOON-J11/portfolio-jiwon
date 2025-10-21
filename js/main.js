@@ -6,6 +6,7 @@ window.lenis = lenis;
 function raf(t) {
   lenis.raf(t);
   if (window.lenisAbout) window.lenisAbout.raf(t);
+  if (window.lenisWorks) window.lenisWorks.raf(t);
   requestAnimationFrame(raf);
 }
 requestAnimationFrame(raf);
@@ -445,6 +446,62 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
     if (!href || href.charAt(0) !== '#') return;
     handleHashNav(e, href);
   });
+})();
+(() => {
+  const worksInner = document.querySelector('.container-works .works-inner');
+  if (!worksInner) return;
+
+  // ✅ Lenis 부드러운 스크롤 추가
+  const lenisWorks = new Lenis({
+    wrapper: worksInner,
+    content: worksInner,
+    smoothWheel: true,
+    smoothTouch: true,
+    lerp: 0.08   // 부드러움 조절 (0.1보다 작을수록 감속이 부드러워짐)
+  });
+  window.lenisWorks = lenisWorks;
+
+  const containers = [...document.querySelectorAll('.container')];
+  const detectContainerIndex = () => {
+    const mid = (window.scrollY || 0) + innerHeight / 2;
+    let best = 0, dist = Infinity;
+    containers.forEach((el, i) => {
+      const c = (el.offsetTop + el.offsetTop + el.offsetHeight) / 2;
+      const d = Math.abs(c - mid);
+      if (d < dist) { dist = d; best = i; }
+    });
+    return best;
+  };
+
+  worksInner.addEventListener('wheel', (e) => {
+    if (SNAP_LOCK || IS_SNAPPING) return;
+
+    const delta = (e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY);
+    const canDown = worksInner.scrollTop + worksInner.clientHeight < worksInner.scrollHeight - 1;
+    const canUp   = worksInner.scrollTop > 1;
+
+    // 내부에서 더 스크롤할 수 있으면 기본 스크롤만 하고 외부 스냅 차단
+    if ((delta > 0 && canDown) || (delta < 0 && canUp)) {
+      e.stopPropagation();
+      return;
+    }
+
+    // 맨 위/아래일 때만 컨테이너 스냅
+    e.preventDefault();
+    e.stopPropagation();
+    const idx = detectContainerIndex();
+    if (delta > 0) window.snapToContainer?.(idx + 1);
+    else           window.snapToContainer?.(idx - 1);
+  }, { passive: false });
+
+  // works 영역에 들어오면 포커스
+  const cont = document.querySelector('.container-works');
+  if (cont) {
+    const io = new IntersectionObserver((ents) => {
+      ents.forEach((e) => e.isIntersecting && worksInner.focus({ preventScroll: true }));
+    }, { threshold: 0.6 });
+    io.observe(cont);
+  }
 })();
 
 

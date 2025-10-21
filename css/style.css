@@ -137,7 +137,8 @@ body .site-header {
 }
 .container .background-text h1 {
   display: inline-block;
-  opacity: 0.015;
+  color: #EDEDED;
+  opacity: 0.02;
   font-size: clamp(72px, 10vw, 250px);
   font-weight: 800;
   white-space: nowrap;
@@ -387,10 +388,220 @@ body .site-header {
   display: none;
 }
 .container-about .about-scroll .about-experience {
-  background-color: rgba(105, 105, 105, 0.364);
   margin-bottom: 0;
 }
 .container-about .about-scroll .about-experience .experience-inner {
   width: 100%;
   max-width: 1047px;
+  display: flex;
+  flex-direction: column;
+  gap: 70px;
+}
+.container-about .about-scroll .about-experience .experience-inner .experience-list {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.container-about .about-scroll .about-experience .experience-inner .experience-list li {
+  display: grid;
+  grid-template-columns: 450px 1fr;
+  -moz-column-gap: 30px;
+       column-gap: 30px;
+  align-items: center;
+}
+.container-about .about-scroll .about-experience .experience-inner .experience-list li .experience-list-header {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.container-about .about-scroll .about-experience .experience-inner .experience-list li .experience-list-header .experience-company {
+  display: flex;
+  gap: 12;
+}
+.container-about .about-scroll .about-experience .experience-inner .experience-list li .experience-list-header .experience-company p {
+  font-size: 16px;
+  line-height: 1;
+}
+.container-about .about-scroll .about-experience .experience-inner .experience-list li .experience-list-header .experience-company p:nth-child(2) {
+  color: #999999;
+}
+.container-about .about-scroll .about-experience .experience-inner .experience-list li .experience-list-header h3 {
+  font-size: 42px;
+  font-weight: 900;
+  line-height: 1.2;
+}
+.container-about .about-scroll .about-experience .experience-inner .experience-list li .experience-list-header span {
+  font-size: 16px;
+  line-height: 1;
+}
+.container-about .about-scroll .about-experience .experience-inner .experience-list li .experience-list-desc {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.container-about .about-scroll .about-experience .experience-inner .experience-list li .experience-list-desc .experience-desc-img {
+  display: flex;
+  gap: 12px;
+}
+.container-about .about-scroll .about-experience .experience-inner .experience-list li .experience-list-desc .experience-desc-img img {
+  width: 30px;
+  height: auto;
+}
+.container-about .about-scroll .about-experience .experience-inner .experience-list li .experience-list-desc p {
+  font-size: 16px;
+}
+.container-about .about-scroll .about-experience .experience-inner .experience-list li::after {
+  content: "";
+  display: block;
+  grid-column: 1/-1;
+  height: 1px;
+  margin-top: 30px;
+  background-color: #999999;
+}
+.container-about .about-scroll .about-experience .experience-inner .experience-list li:last-child::after {
+  display: none;
+}
+
+/* 컨테이너 works */
+.container-works .works-inner {
+  height: 100%;
+  padding: 40px;
+  overflow-y: auto;
+  background-color: rgba(0, 255, 183, 0.1333333333);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+.container-works .works-inner::-webkit-scrollbar {
+  display: none;
+}
+.container-works .works-inner .works-title {
+  text-align: center;
+}
+.container-works .works-inner .works-title h1 {
+  text-transform: uppercase;
+  font-size: 60px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.container-works .works-inner .works-title p {
+  font-size: 16px;
+  font-weight: 1.5;
+}
+.container-works .works-inner .works-projects {
+  width: 100%;
+  max-width: 1450px;
+  background-color: rgba(255, 235, 205, 0.12);
+  margin: 0 auto;
+}
+.container-works .works-inner .works-projects .works-title {
+  margin-bottom: 170px;
+}
+.container-works .works-inner .works-projects .projects-item {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+.container-works .works-inner .works-projects .projects-item .projects-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 560px;
+}
+.container-works .works-inner .works-projects .projects-item .projects-item-info .projects-item-info-top .projects-item-info-meta {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.container-works .works-inner .works-projects .projects-item .projects-item-info .projects-item-info-top .projects-item-info-meta p {
+  white-space: nowrap;
+  line-height: 1;
+}
+.container-works .works-inner .works-projects .projects-item .projects-item-info .projects-item-info-top .projects-item-info-meta p:nth-child(1) {
+  font-size: 12px;
+  color: #161616;
+  background-color: #00FFB7;
+  padding: 5px 9px;
+  border-radius: 12px;
+}
+.container-works .works-inner .works-projects .projects-item .projects-item-info .projects-item-info-top .projects-item-info-meta p:nth-child(2) {
+  font-size: 14px;
+  color: #999999;
+}
+.container-works .works-inner .works-projects .projects-item .projects-item-info .projects-item-info-top .projects-item-info-title {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+.container-works .works-inner .works-projects .projects-item .projects-item-info .projects-item-info-top .projects-item-info-title h2 {
+  font-size: 48px;
+  font-weight: 900;
+}
+.container-works .works-inner .works-projects .projects-item .projects-item-info .projects-item-info-top .projects-item-info-title p {
+  font-size: 18px;
+}
+.container-works .works-inner .works-projects .projects-item .projects-item-info .projects-item-info-badge ul {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.container-works .works-inner .works-projects .projects-item .projects-item-info .projects-item-info-badge ul li {
+  font-size: 12px;
+  line-height: 1;
+  padding: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 5px;
+}
+.container-works .works-inner .works-projects .projects-item .projects-item-info .projects-item-info-links {
+  display: flex;
+  gap: 12px;
+}
+.container-works .works-inner .works-projects .projects-item .projects-item-info .projects-item-info-links a {
+  display: inline-flex;
+  align-items: center;
+  width: 30px;
+}
+.container-works .works-inner .works-projects .projects-item .projects-item-info .projects-item-info-links a svg {
+  color: #EDEDED;
+}
+.container-works .works-inner .works-projects .projects-item .projects-item-info .projects-item-info-links a:hover svg {
+  color: #FFFFFF;
+}
+.container-works .works-inner .works-projects .projects-item .projects-item-visual {
+  position: relative;
+}
+.container-works .works-inner .works-projects .projects-item .projects-item-visual img {
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+}
+.container-works .works-inner .works-projects .projects-item .projects-item-visual .main-visual.project1-main-visual {
+  max-width: 530px;
+}
+.container-works .works-inner .works-projects .projects-item .projects-item-visual .main-visual.project2-main-visual {
+  max-width: 530px;
+}
+.container-works .works-inner .works-projects .projects-item .projects-item-visual .main-visual.project3-main-visual {
+  max-width: 650px;
+}
+.container-works .works-inner .works-projects .projects-item .projects-item-visual .sub-visual {
+  position: absolute;
+}
+.container-works .works-inner .works-projects .projects-item .projects-item-visual .sub-visual.project1-sub-visual {
+  width: 397px;
+}
+.container-works .works-inner .works-projects .projects-item .projects-item-visual .sub-visual.project1-sub-visual:nth-of-type(2) {
+  top: 130px;
+  left: -200px;
+}
+.container-works .works-inner .works-projects .projects-item .projects-item-visual .sub-visual.project1-sub-visual:nth-of-type(3) {
+  top: 330px;
+  right: -210px;
+}
+.container-works .works-inner .works-projects .projects-item .projects-item-visual .sub-visual.project1-sub-visual:nth-of-type(4) {
+  top: 540px;
+  left: -170px;
 }/*# sourceMappingURL=style.css.map */
