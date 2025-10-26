@@ -1,6 +1,6 @@
 $color-bg: #161616;
-//$color-bg: #2121216; 배경색상 보류
-//$color-bg: #0D1117; 배경색상 보류
+//$color-bg: #212121; //배경색상 보류
+//$color-bg: #0D1117; //배경색상 보류
 $color-text: #EDEDED;
 $color-accent: #00FFB7;
 $color-muted: #999999;
@@ -50,7 +50,6 @@ $container-max-width: 1450px;
         transform: rotate(0deg);
     }
 }
-
 
 body {
     background-color: $color-bg;
@@ -250,7 +249,7 @@ body {
                 align-items: center;
                 gap: 20px;
 
-                button {
+                a {
                     background-color: $color-muted;
                     color: $color-bg;
                     font-size: 16px;
@@ -285,7 +284,6 @@ body {
     }
 }
 
-
 /* 컨테이너 about */
 .container-about {
     height: 100svh;
@@ -296,7 +294,6 @@ body {
         height: 100%;
         overflow: hidden;
         padding: 40px;
-        //background-color: #ededed7b;
 
         .about-panel {
             min-height: calc(100svh - 80px);
@@ -525,7 +522,7 @@ body {
 
                             .experience-company {
                                 display: flex;
-                                gap: 12;
+                                gap: 12px;
 
                                 p {
                                     font-size: 16px;
@@ -595,7 +592,6 @@ body {
         height: 100%;
         padding: 40px;
         overflow-y: auto;
-        background-color: #00ffb722;
         scrollbar-width: none;
         -ms-overflow-style: none;
 
@@ -626,11 +622,10 @@ body {
         .works-projects {
             width: 100%;
             max-width: 1450px;
-            background-color: rgba(255, 235, 205, 0.12);
             margin: 0 auto;
 
             .works-title {
-                margin-bottom: 170px;
+                padding: 150px 0;
             }
 
             .projects-item {
@@ -638,6 +633,7 @@ body {
                 gap: 20px;
                 justify-content: space-between;
                 align-items: center;
+                padding-bottom: 150px;
 
                 .projects-item-info {
                     display: flex;
@@ -755,7 +751,7 @@ body {
                         position: absolute;
 
                         &.project1-sub-visual {
-                            width: 397px;
+                            width: 387px;
 
                             &:nth-of-type(2) {
                                 top: 130px;
@@ -773,11 +769,220 @@ body {
                             }
                         }
 
+                        &.project2-sub-visual {
+                            width: 387px;
+
+                            &:nth-of-type(2) {
+                                top: 230px;
+                                right: -210px
+                            }
+
+                            &:nth-of-type(3) {
+                                top: 490px;
+                                right: -210px;
+                            }
+
+                        }
+
+                        &.project3-sub-visual {
+                            width: 400px;
+
+                            &:nth-of-type(2) {
+                                top: 300px;
+                                left: -200px;
+                            }
+
+                            &:nth-of-type(3) {
+                                top: 410px;
+                                left: 150px;
+                            }
+
+                        }
+
+                    }
+                }
+
+                &.project2 {
+                    .projects-item-info {
+                        order: 2;
                     }
 
+                    .projects-item-visual {
+                        order: 1;
+                    }
+                }
+            }
 
+        }
+
+        .works-publishing {
+            margin-top: 500px;
+
+            .works-title {
+                margin-bottom: 40px;
+            }
+
+            .publishing-items-wrap {
+                position: relative;
+                max-width: 1200px;
+                margin: 0 auto;
+                overflow: hidden;
+
+                .publishing-items {
+                    position: relative;
+
+                    .slick-list {
+                        overflow: hidden;
+                        margin: 0;
+                        padding: 0;
+                    }
+
+                    .slick-track {
+                        overflow: visible;
+                    }
+
+                    .slick-slide {
+                        padding: 0;
+                        box-sizing: border-box;
+
+                        a {
+                            pointer-events: none;
+                            cursor: default;
+                        }
+                    }
+
+                    .card {
+                        position: relative;
+                        overflow: hidden;
+                        border-radius: 10px;
+                        aspect-ratio: 740 / 460;
+                        transform: scale(.8);
+                        transition: transform .35s ease, filter .35s ease;
+                        filter: saturate(.85);
+                    }
+
+                    .slick-slide:not(.slick-center) .card {
+                        filter: grayscale(100%) brightness(0.7);
+                        transform: scale(.8);
+                    }
+
+                    .slick-center .card,
+                    .slick-current .card {
+                        transform: scale(1);
+                        filter: none;
+                    }
+
+                    .slick-center a,
+                    .slick-current a {
+                        pointer-events: auto;
+                        cursor: pointer;
+                    }
+
+                    .slick-prev,
+                    .slick-next {
+                        display: none !important;
+                    }
+                }
+
+                .slide-caption {
+                    margin-top: 30px;
+                    text-align: center;
+
+                    .caption-tag {
+                        color: $color-bg;
+                        font-size: 14px;
+                        line-height: 1;
+                        background-color: $color-accent;
+                        padding: 6px 12px;
+                        border-radius: 12px;
+                        display: inline-block;
+                    }
+
+                    .caption-title {
+                        margin-top: 8px;
+                        font-size: 32px;
+                        line-height: 1;
+                        font-weight: 600;
+                        opacity: 0;
+                        transition: opacity .25s ease;
+                    }
+
+                    .caption-meta {
+                        font-size: 12px;
+                        color: #9aa2a9;
+                        margin-top: 8px;
+                        opacity: 0;
+                        transition: opacity .25s ease;
+                    }
                 }
             }
         }
+
+        .works-design {
+            margin-top: 500px;
+
+            .works-title {
+                margin-bottom: 60px;
+            }
+
+            .design-items-wrap {
+                width: 100%;
+                max-width: 1450px;
+                margin: 0 auto;
+                display: flex;
+                gap: 20px;
+
+                .design-item {
+                    border-radius: 10px;
+                    overflow: hidden;
+
+                    img {
+                        filter: grayscale(100%) brightness(90%);
+                        transition: filter 0.4s ease;
+                    }
+
+                    &:hover img {
+                        filter: grayscale(0%) brightness(100%);
+                    }
+                }
+            }
+        }
+
+        .works-other {
+            margin-top: 500px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            align-items: center;
+            padding-bottom: 400px;
+
+            .gallery-btn {
+                font-size: 24px;
+                display: inline-flex;
+                align-items: center;
+                gap: 20px;
+                padding: 10px 30px 10px 20px;
+                border: 1px solid $glass-border;
+                background-color: $glass-bg;
+                border-radius: 10px;
+                transition: all .3s ease;
+
+                svg {
+                    width: 20px;
+                    height: 20px;
+                    fill: $color-text;
+                    animation: moveX 1.5s ease infinite;
+                }
+
+                &:hover{
+                    background-color: #ededed83;
+                    color: $color-bg;
+                    svg{
+                        fill: $color-bg;
+                    }
+                }
+            }
+        }
+
     }
 }

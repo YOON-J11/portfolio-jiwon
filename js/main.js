@@ -478,7 +478,7 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
 
     const delta = (e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY);
     const canDown = worksInner.scrollTop + worksInner.clientHeight < worksInner.scrollHeight - 1;
-    const canUp   = worksInner.scrollTop > 1;
+    const canUp = worksInner.scrollTop > 1;
 
     // 내부에서 더 스크롤할 수 있으면 기본 스크롤만 하고 외부 스냅 차단
     if ((delta > 0 && canDown) || (delta < 0 && canUp)) {
@@ -491,7 +491,7 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
     e.stopPropagation();
     const idx = detectContainerIndex();
     if (delta > 0) window.snapToContainer?.(idx + 1);
-    else           window.snapToContainer?.(idx - 1);
+    else window.snapToContainer?.(idx - 1);
   }, { passive: false });
 
   // works 영역에 들어오면 포커스
@@ -540,3 +540,86 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
   window.addEventListener('resize', recalc);
   window.addEventListener('load', recalc);
 })();
+
+
+//slick slider
+$(function () {
+  var $slider = $('.js-publishing-slick');
+  var $tag = $('.slide-caption .caption-tag');
+  var $title = $('.slide-caption .caption-title');
+  var $meta = $('.slide-caption .caption-meta');
+
+  function setCaption(slick, index) {
+    var $slide = $(slick.$slides[index]);
+    var tag = $slide.data('tag') || '';
+    var title = $slide.data('title') || '';
+    var date = $slide.data('date') || '';
+
+    $tag.css('opacity', 0);
+    $title.css('opacity', 0);
+    $meta.css('opacity', 0);
+
+    setTimeout(function () {
+      $tag.text(tag).css('opacity', 1);
+      $title.text(title).css('opacity', 1);
+      $meta.text(date).css('opacity', 1);
+    }, 150);
+  }
+
+  function updateSlideLinks(slick) {
+    var $slides = $(slick.$slides);
+    $slides.each(function () {
+      var $slide = $(this);
+      var $a = $slide.find('a');
+
+      if ($slide.hasClass('slick-center') || $slide.hasClass('slick-current')) {
+        $a.attr({'tabindex': 0, 'aria-disabled': 'false'});
+      } else {
+        $a.attr({'tabindex': -1, 'aria-disabled': 'true'});
+      }
+    });
+  }
+
+  $slider.on('click', '.slick-slide a', function (e) {
+    var $slide = $(this).closest('.slick-slide');
+    if (!$slide.hasClass('slick-center') && !$slide.hasClass('slick-current')) {
+      e.preventDefault();
+      var idx = parseInt($slide.attr('data-slick-index'), 10);
+      if (!isNaN(idx)) $slider.slick('slickGoTo', idx);
+    }
+  });
+
+  $slider.on('init', function (e, slick) {
+    setCaption(slick, slick.currentSlide);
+    updateSlideLinks(slick);
+  });
+
+  $slider.slick({
+    slidesToShow: 3,
+    centerMode: true,
+    centerPadding: '0px',
+    infinite: true,
+    arrows: false,
+    dots: false,
+    speed: 1000,
+    cssEase: 'ease',
+    focusOnSelect: true,
+    draggable: true,
+    swipe: true,
+    touchMove: true,
+    swipeToSlide: true,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    pauseOnHover: false,
+    responsive: [
+      { breakpoint: 1400, settings: { slidesToShow: 3, centerPadding: '0px' } },
+      { breakpoint: 768,  settings: { slidesToShow: 3, centerPadding: '0px' } },
+      { breakpoint: 480,  settings: { slidesToShow: 1, centerPadding: '16px' } }
+    ]
+  });
+
+  $slider.on('afterChange', function (e, slick, current) {
+    setCaption(slick, current);
+    updateSlideLinks(slick);
+  });
+});
