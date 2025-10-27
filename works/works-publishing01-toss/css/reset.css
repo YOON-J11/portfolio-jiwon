@@ -1,0 +1,122 @@
+/* Toss 폰트 CDN 불러오기 */
+@import url('https://static.toss.im/tps/main.css');
+@import url('https://static.toss.im/tps/others.css');
+
+/* 모든 요소 기본값 초기화 */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 이미지 블록화 및 최대너비 제한 */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* 폼요소 폰트 상속 */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+/* a 태그 초기화 */
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* 기본 폰트 및 타이포그래피 설정 */
+html,
+body {
+  font-family: 'Toss Product Sans', 'Pretendard', -apple-system, BlinkMacSystemFont,
+               'Noto Sans KR', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif,
+               'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+}
+
+html { scrollbar-gutter: stable; }
+
+/* HTML5 요소를 블록화 (구형 브라우저 대응) */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+/* 글자 크기 초기화 */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  font-size: 100%;
+  vertical-align: baseline;
+  border: 0;
+}
+
+/* 리스트 스타일 제거 */
+ol, ul {
+  list-style: none;
+}
+
+/* 인용문 기본 따옴표 제거 */
+blockquote, q {
+  quotes: none;
+}
+
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
+  content: '';
+}
+
+
+/*스크롤바 스타일*/
+/* ✅ 크롬 / 엣지 / 사파리용 */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbcfd4;
+  border-radius: 999px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #515e6f;
+}
+
+/* ✅ 파이어폭스용 */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #cbcfd4 transparent;
+}

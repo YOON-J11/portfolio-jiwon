@@ -35,6 +35,7 @@
 body {
   background-color: #161616;
   color: #EDEDED;
+  cursor: url("/assets/img/cursor.png"), auto;
 }
 body .site-header {
   position: fixed;
@@ -103,11 +104,41 @@ body .site-header {
   top: 0;
   right: 0;
   width: 100%;
-  max-width: 650px;
+  max-width: 750px;
   height: 100vh;
   transform: translateX(100%);
   transition: transform 0.5s ease;
   z-index: 2002;
+}
+.site-header .gnb .site-menu {
+  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+}
+.site-header .gnb .site-menu li a {
+  font-size: 42px;
+  font-weight: 300;
+  padding: 12px 0;
+  display: block;
+  position: relative;
+  color: #999999;
+  transition: all 1s ease;
+}
+.site-header .gnb .site-menu li a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 0.5px;
+  background-color: #00FFB7;
+  transition: width 1s ease;
+}
+.site-header .gnb .site-menu li a:hover {
+  color: #EDEDED;
+}
+.site-header .gnb .site-menu li a:hover::after {
+  width: 100%;
 }
 .site-header.open .nav-dim {
   opacity: 1;

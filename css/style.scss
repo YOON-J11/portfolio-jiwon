@@ -55,6 +55,9 @@ body {
     background-color: $color-bg;
     color: $color-text;
 
+    cursor: url('/assets/img/cursor.png'), auto;
+
+
     .site-header {
         position: fixed;
         top: 0;
@@ -139,11 +142,86 @@ body {
         top: 0;
         right: 0;
         width: 100%;
-        max-width: 650px;
+        max-width: 750px;
         height: 100vh;
         transform: translateX(100%);
         transition: transform .5s ease;
         z-index: 2002;
+
+        .site-menu {
+            margin-top: 80px;
+            display: flex;
+            flex-direction: column;
+
+            li {
+
+                a {
+                    font-size: 42px;
+                    font-weight: 300;
+                    padding: 12px 0;
+                    display: block;
+                    position: relative;
+                    color: $color-muted;
+                    transition: all 1s ease;
+
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        left: 0;
+                        bottom: 0; // 텍스트 바로 아래 위치
+                        width: 0;
+                        height: 0.5px; // 밑줄 두께
+                        background-color: $color-accent;
+                        transition: width 1s ease;
+                    }
+
+                    &:hover {
+                        color: $color-text;
+
+                        &::after {
+                            width: 100%;
+                        }
+                    }
+                }
+
+            }
+        }
+
+        // .oter-menu {
+        //     margin-top: 50px;
+        //     display: flex;
+        //     gap: 10px;
+        //     justify-content: space-between;
+
+        //     li {
+        //         flex: 1;
+
+        //         h3 {
+        //             font-size: 20px;
+        //             color: $color-text;
+        //             margin-bottom: 10px;
+        //         }
+
+        //         p {
+        //             font-size: 14px;
+        //             color: $color-text;
+        //         }
+
+        //         .social-icon {
+        //             display: flex;
+        //             gap: 10px;
+
+        //             a {
+        //                 svg {
+        //                     width: 20px;
+        //                     height: 20px;
+        //                     fill: $color-muted;
+        //                 }
+        //             }
+
+        //         }
+        //     }
+        // }
     }
 
     &.open {
@@ -1043,7 +1121,7 @@ body {
                             gap: 10px;
                             align-items: center;
 
-                            span{
+                            span {
                                 font-size: 12px;
                                 font-weight: 400;
                                 color: $color-muted;
@@ -1068,6 +1146,7 @@ body {
                         display: flex;
                         align-items: center;
                         gap: 20px;
+
                         button {
                             align-self: flex-end;
                             width: auto;
@@ -1120,7 +1199,7 @@ body {
                         cursor: pointer;
                         transition: all .3s ease;
 
-                        svg{
+                        svg {
                             width: 17px;
                             height: 17px;
                             fill: $color-muted;
@@ -1129,13 +1208,14 @@ body {
 
                         &:hover {
                             color: $color-white;
-                            svg{
+
+                            svg {
                                 fill: $color-white;
                             }
                         }
                     }
 
-                    .copy-status{
+                    .copy-status {
                         font-size: 12px;
 
                     }
@@ -1167,13 +1247,14 @@ body {
         }
 
 
-        .footer{
+        .footer {
             position: absolute;
             left: 50%;
             transform: translate(-50%);
             bottom: 40px;
             text-align: center;
-            p{
+
+            p {
                 font-weight: 300;
                 font-size: 12px;
             }
