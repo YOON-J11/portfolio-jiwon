@@ -49,14 +49,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 // lotti 애니메이션 이미지
-lottie.loadAnimation({//스크롤다운이미지
+lottie.loadAnimation({
   container: document.getElementById('lottie-scroll-down'),
   renderer: 'svg',
   loop: true,
   autoplay: true,
   path: './assets/lottie/scroll-down-animation.json'
 });
-lottie.loadAnimation({//우주인이미지
+lottie.loadAnimation({
   container: document.getElementById('lottie-astronaut'),
   renderer: 'svg',
   loop: true,
@@ -82,18 +82,15 @@ if (menuBtn && dim) {
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && header.classList.contains('open')) closeMenu(); });
 }
 
-// 휠 델타 정규화/임계값
 function normWheelDelta(e) { return e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY; }
-const MIN_WHEEL_ABS = 6;     // 시간창 누적 임계
-const ACC_WINDOW_MS = 140;   // 누적 시간창(ms)
+const MIN_WHEEL_ABS = 6;
+const ACC_WINDOW_MS = 140;
 
-// 스냅 락(안착 시 해제)
 let SNAP_LOCK = false;
 let IS_SNAPPING = false;
 function lockSnap() { SNAP_LOCK = true; IS_SNAPPING = true; }
 function unlockSnap() { IS_SNAPPING = false; SNAP_LOCK = false; }
 
-// 윈도우 스크롤이 대상 요소 top에 안착했는지 감시
 function waitSettleWindow(targetEl, { tol = 1, settleFrames = 4, timeout = 2200 } = {}, onDone) {
   const targetY = targetEl.offsetTop;
   let ok = 0, stop = false, t0 = performance.now();
@@ -107,7 +104,6 @@ function waitSettleWindow(targetEl, { tol = 1, settleFrames = 4, timeout = 2200 
   requestAnimationFrame(tick);
 }
 
-// 내부(.about-scroll) 패널이 래퍼 패딩 기준으로 안착했는지 감시
 function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames = 4, timeout = 2200 }, onDone) {
   let ok = 0, stop = false, t0 = performance.now();
   function tick() {
@@ -121,7 +117,6 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
   requestAnimationFrame(tick);
 }
 
-// 바깥 컨테이너 스냅
 (() => {
   const containers = [...document.querySelectorAll('.container')];
   if (!containers.length) return;
@@ -152,10 +147,8 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
   }
   window.snapToContainer = snapToContainer;
 
-  // 휠 누적(시간창)
   let outerAccAbs = 0, outerAccSigned = 0, outerFirstSign = 0, outerLastTs = 0;
 
-  // 휠 스냅
   window.addEventListener('wheel', (e) => {
     if (e.target.closest('.about-scroll,[data-lenis-prevent]')) return;
     if (SNAP_LOCK || IS_SNAPPING) return;
@@ -176,7 +169,6 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
     snapToContainer(next);
   }, { passive: false });
 
-  // 키보드 스냅
   window.addEventListener('keydown', (e) => {
     if (SNAP_LOCK || IS_SNAPPING) return;
     const nextKeys = ['ArrowDown', 'PageDown', 'Space'];
@@ -188,7 +180,6 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
     snapToContainer(next);
   });
 
-  // 상태 동기화
   let _sync = null;
   window.addEventListener('scroll', () => {
     if (SNAP_LOCK || IS_SNAPPING) return;
@@ -251,7 +242,6 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
     return Math.abs(lastBottom - wrapBottom) <= 24 || lastBottom <= wrapBottom;
   };
 
-  // 패널 스냅(+패딩 고려)
   function snapToPanel(i) {
     if (i < 0 || i >= panels.length) return;
     const padTop = getPad().top;
@@ -296,7 +286,6 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
     const delta = normWheelDelta(e);
     if (delta === 0) return;
 
-    // 현재 보이는 패널 인덱스
     const cur = panelIndexByView();
     const isLast = (cur >= panels.length - 1);
     const isFirst = (cur <= 0);
@@ -332,7 +321,6 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
         const outerCur = containerIndexByCenter();
         window.snapToContainer?.(outerCur + 1);
       } else {
-        // 마지막 패널이면 cur+1이 cur와 같아지는 문제 방지용 가드
         const next = Math.min(cur + 1, panels.length - 1);
         if (next !== cur) snapToPanel(next);
       }
@@ -350,7 +338,7 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
 
   aboutWrapper.addEventListener('wheel', wheelHandler, { passive: false });
 
-  // 키보드 스냅
+
   aboutWrapper.addEventListener('keydown', (e) => {
     if (SNAP_LOCK || IS_SNAPPING) return;
     const nextKeys = ['ArrowDown', 'PageDown', 'Space'];
@@ -375,7 +363,6 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
     }
   });
 
-  // 내부 영역 진입 시 포커스
   const containerAbout = document.querySelector('.container-about');
   if (containerAbout) {
     const io = new IntersectionObserver((ents) => {
@@ -384,6 +371,8 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
     io.observe(containerAbout);
   }
 })();
+
+
 
 // GNB & 스크롤다운 링크 → 스냅 네비게이션
 (() => {
@@ -415,7 +404,6 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
     ev.preventDefault();
     closeMenuIfOpen();
 
-    // about 내부 패널
     if (isAboutPanelId(id)) {
       const aboutIdx = idToContainerIndex('about');
       if (aboutIdx === -1) return;
@@ -428,17 +416,14 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
       return;
     }
 
-    // 상위 컨테이너
     const cIdx = idToContainerIndex(id);
     if (cIdx !== -1) { window.snapToContainer?.(cIdx); return; }
 
-    // 일반 앵커(예비)
     lockSnap();
     lenis.scrollTo(el, { duration: 0.9 });
     waitSettleWindow(el, { tol: 1, settleFrames: 4, timeout: 2200 }, () => { unlockSnap(); });
   }
 
-  // 델리게이션: GNB a, .scroll-down-link
   document.addEventListener('click', (e) => {
     const a = e.target.closest('.gnb a, .scroll-down-link');
     if (!a) return;
@@ -451,13 +436,12 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
   const worksInner = document.querySelector('.container-works .works-inner');
   if (!worksInner) return;
 
-  // ✅ Lenis 부드러운 스크롤 추가
   const lenisWorks = new Lenis({
     wrapper: worksInner,
     content: worksInner,
     smoothWheel: true,
     smoothTouch: true,
-    lerp: 0.08   // 부드러움 조절 (0.1보다 작을수록 감속이 부드러워짐)
+    lerp: 0.08
   });
   window.lenisWorks = lenisWorks;
 
@@ -480,13 +464,11 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
     const canDown = worksInner.scrollTop + worksInner.clientHeight < worksInner.scrollHeight - 1;
     const canUp = worksInner.scrollTop > 1;
 
-    // 내부에서 더 스크롤할 수 있으면 기본 스크롤만 하고 외부 스냅 차단
     if ((delta > 0 && canDown) || (delta < 0 && canUp)) {
       e.stopPropagation();
       return;
     }
 
-    // 맨 위/아래일 때만 컨테이너 스냅
     e.preventDefault();
     e.stopPropagation();
     const idx = detectContainerIndex();
@@ -494,7 +476,6 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
     else window.snapToContainer?.(idx - 1);
   }, { passive: false });
 
-  // works 영역에 들어오면 포커스
   const cont = document.querySelector('.container-works');
   if (cont) {
     const io = new IntersectionObserver((ents) => {
@@ -573,9 +554,9 @@ $(function () {
       var $a = $slide.find('a');
 
       if ($slide.hasClass('slick-center') || $slide.hasClass('slick-current')) {
-        $a.attr({'tabindex': 0, 'aria-disabled': 'false'});
+        $a.attr({ 'tabindex': 0, 'aria-disabled': 'false' });
       } else {
-        $a.attr({'tabindex': -1, 'aria-disabled': 'true'});
+        $a.attr({ 'tabindex': -1, 'aria-disabled': 'true' });
       }
     });
   }
@@ -613,8 +594,8 @@ $(function () {
     pauseOnHover: false,
     responsive: [
       { breakpoint: 1400, settings: { slidesToShow: 3, centerPadding: '0px' } },
-      { breakpoint: 768,  settings: { slidesToShow: 3, centerPadding: '0px' } },
-      { breakpoint: 480,  settings: { slidesToShow: 1, centerPadding: '16px' } }
+      { breakpoint: 768, settings: { slidesToShow: 3, centerPadding: '0px' } },
+      { breakpoint: 480, settings: { slidesToShow: 1, centerPadding: '16px' } }
     ]
   });
 
@@ -623,3 +604,102 @@ $(function () {
     updateSlideLinks(slick);
   });
 });
+
+
+
+(function () {
+  const form = document.getElementById('contactForm');
+  const nameEl = document.getElementById('name');
+  const emailEl = document.getElementById('email');
+  const msgEl = document.getElementById('message');
+  const btn = document.getElementById('submitBtn');
+  const formStatus = document.getElementById('formStatus');
+
+  const copyBtn = document.getElementById('copyEmailBtn'); // 있으면 복사 기능 활성
+  const copyStatus = document.getElementById('copyStatus');
+
+  // 🔗 네가 준 Formspree 엔드포인트
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xovpjlvp';
+
+  // 간단 검증 → 모두 채워져야 활성화
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  function validate() {
+    const nameOk = nameEl.value.trim().length >= 2;
+    const emailOk = emailRegex.test(emailEl.value.trim());
+    const msgOk = msgEl.value.trim().length >= 5;
+    const ok = nameOk && emailOk && msgOk;
+
+    btn.disabled = !ok;
+    btn.classList.toggle('is-disabled', !ok);
+    btn.setAttribute('aria-disabled', String(!ok));
+  }
+  ['input', 'change', 'blur'].forEach(ev => {
+    nameEl.addEventListener(ev, validate);
+    emailEl.addEventListener(ev, validate);
+    msgEl.addEventListener(ev, validate);
+  });
+  validate();
+
+  // 제출 → Formspree로 JSON POST
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (btn.disabled) return;
+
+    btn.disabled = true;
+    btn.classList.add('is-disabled');
+    formStatus.textContent = '전송 중입니다...';
+
+    const payload = {
+      name: nameEl.value.trim(),
+      email: emailEl.value.trim(),
+      message: msgEl.value.trim(),
+      _subject: `[Portfolio] ${nameEl.value.trim()}님 문의`,
+      _format: 'json'
+    };
+
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (res.ok) {
+        formStatus.textContent = '메시지가 전송되었습니다. 곧 연락드릴게요!';
+        form.reset();
+        validate();
+      } else {
+        const data = await res.json().catch(() => ({}));
+        formStatus.textContent = data?.error || '전송에 실패했어요. 잠시 후 다시 시도해주세요.';
+        btn.disabled = false;
+        btn.classList.remove('is-disabled');
+        btn.setAttribute('aria-disabled', 'false');
+      }
+    } catch (err) {
+      console.error(err);
+      formStatus.textContent = '네트워크 오류가 발생했어요. 인터넷 연결을 확인해주세요.';
+      btn.disabled = false;
+      btn.classList.remove('is-disabled');
+      btn.setAttribute('aria-disabled', 'false');
+    }
+  });
+
+  // 이메일 주소 복사(우측 버튼이 있을 때)
+  if (copyBtn) {
+    copyBtn.addEventListener('click', async () => {
+      const email = copyBtn.dataset.email || 'yjw5619@gmail.com';
+      try {
+        await navigator.clipboard.writeText(email);
+        if (copyStatus) {
+          copyStatus.textContent = '이메일 주소가 복사되었습니다.';
+          setTimeout(() => (copyStatus.textContent = ''), 2000);
+        }
+      } catch {
+        if (copyStatus) {
+          copyStatus.textContent = '복사 실패. 길게 눌러 직접 복사해주세요.';
+          setTimeout(() => (copyStatus.textContent = ''), 2000);
+        }
+      }
+    });
+  }
+})();
