@@ -2,6 +2,8 @@
 const lenis = new Lenis({ smoothWheel: true, smoothTouch: false });
 window.lenis = lenis;
 
+
+
 // RAF 루프 (Lenis 실행)
 function raf(t) {
   lenis.raf(t);
@@ -10,6 +12,7 @@ function raf(t) {
   requestAnimationFrame(raf);
 }
 requestAnimationFrame(raf);
+
 
 // 별 배경(tsParticles) 초기화
 document.addEventListener("DOMContentLoaded", async () => {
@@ -42,6 +45,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   await tsParticles.load({ id: "particles-js", options });
 });
 
+
+
+
 // lottie 애니메이션 이미지
 document.querySelectorAll('.lottie-scroll-down').forEach((el) => {
   lottie.loadAnimation({
@@ -61,8 +67,11 @@ lottie.loadAnimation({
   path: './assets/lottie/astronaut.json'
 });
 
+
+
 // 바운스 방지
 document.documentElement.style.overscrollBehavior = 'none';
+
 
 // 메뉴 토글
 const header = document.querySelector('.site-header');
@@ -75,6 +84,8 @@ if (menuBtn && dim) {
   dim.addEventListener('click', closeMenu);
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && header.classList.contains('open')) closeMenu(); });
 }
+
+
 
 function normWheelDelta(e) { return e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY; }
 const MIN_WHEEL_ABS = 6;
@@ -110,6 +121,9 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
   }
   requestAnimationFrame(tick);
 }
+
+
+
 
 /* =======================
    바깥 컨테이너 스냅 (커버/섹션 간)
@@ -167,10 +181,10 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
     snapToContainer(next);
   }, { passive: false });
 
-  // ==== 모바일 터치 스와이프 → 바깥 컨테이너 스냅 ====
+  // 모바일 터치 스와이프 → 바깥 컨테이너 스냅
   const OUTER_TOUCH_EXCLUDE_SELECTOR = '.about-scroll,[data-lenis-prevent],.works-inner';
   const TOUCH_MIN_ABS = 40;   // 최소 이동 픽셀
-  const TOUCH_MAX_TIME = 500; // 최대 제스처 시간(ms)
+  const TOUCH_MAX_TIME = 500; // 최대 제스처 시간
 
   let touchStartY = 0;
   let touchLastY = 0;
@@ -210,7 +224,7 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
   }, { passive: true });
 
   window.addEventListener('touchmove', (e) => {
-    // 도중에 내부 스크롤러로 진입하면 즉시 handoff (바깥 스냅 포기)
+    // 도중에 내부 스크롤러로 진입하면 즉시 handoff (바깥 스냅 포기
     if (outerTouchActive && isInInnerScrollable(e.target, e.composedPath?.())) {
       outerTouchActive = false;
       return;
@@ -511,6 +525,9 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
   }
 })();
 
+
+
+
 /* =======================
    GNB & 스크롤다운 링크 → 스냅 네비게이션
 ======================= */
@@ -572,6 +589,9 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
   });
 })();
 
+
+
+
 /* =======================
    #works 내부 스크롤 + 끝단에서 컨테이너 스냅
 ======================= */
@@ -600,6 +620,10 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
     return best;
   };
 
+
+
+
+
   // wheel: 끝단에서만 바깥 스냅
   worksInner.addEventListener('wheel', (e) => {
     if (SNAP_LOCK || IS_SNAPPING) return;
@@ -620,7 +644,6 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
     else window.snapToContainer?.(idx - 1);
   }, { passive: false });
 
-  // touch: 내부 스크롤 유지, 끝단에서만 바깥 스냅
   const TOUCH_MIN_ABS_WORKS = 32;
   const TOUCH_MAX_TIME_WORKS = 700;
   let wStartY = 0, wLastY = 0, wAccumY = 0, wStartT = 0, wMoved = false, wActive = false;
@@ -644,7 +667,6 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
     wAccumY += dy;
     wLastY = y;
     if (Math.abs(wAccumY) > 2) wMoved = true;
-    // 내부 스크롤이 주역 → 기본 동작 허용
   }, { passive: true });
 
   worksInner.addEventListener('touchend', (e) => {
@@ -657,13 +679,12 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
 
     const dir = Math.sign(wAccumY);
 
-    if (dir > 0 && canWorksDown()) return; // 아래로, 내부 스크롤 여유 있음
-    if (dir < 0 && canWorksUp())   return; // 위로, 내부 스크롤 여유 있음
+    if (dir > 0 && canWorksDown()) return;
+    if (dir < 0 && canWorksUp())   return;
 
-    // 끝단이면 바깥 스냅
     e.preventDefault();
     const idx = detectContainerIndex();
-    if (dir > 0) window.snapToContainer?.(idx + 1); // → #contact
+    if (dir > 0) window.snapToContainer?.(idx + 1);
     else         window.snapToContainer?.(idx - 1);
   }, { passive: false });
 
@@ -675,6 +696,11 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
     io.observe(cont);
   }
 })();
+
+
+
+
+
 
 /* =======================
    stack tab
@@ -714,6 +740,10 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
   window.addEventListener('load', recalc);
 })();
 
+
+
+
+
 /* =======================
    slick slider
 ======================= */
@@ -746,17 +776,18 @@ $(function () {
       var $slide = $(this);
       var $a = $slide.find('a');
 
-      if ($slide.hasClass('slick-center') || $slide.hasClass('slick-current')) {
-        $a.attr({ 'tabindex': 0, 'aria-disabled': 'false' });
+      // 깜빡임/중간 강조 방지를 위해 'slick-current'만 신뢰
+      if ($slide.hasClass('slick-current')) {
+        $a.attr({ tabindex: 0, 'aria-disabled': 'false' });
       } else {
-        $a.attr({ 'tabindex': -1, 'aria-disabled': 'true' });
+        $a.attr({ tabindex: -1, 'aria-disabled': 'true' });
       }
     });
   }
 
   $slider.on('click', '.slick-slide a', function (e) {
     var $slide = $(this).closest('.slick-slide');
-    if (!$slide.hasClass('slick-center') && !$slide.hasClass('slick-current')) {
+    if (!$slide.hasClass('slick-current')) {
       e.preventDefault();
       var idx = parseInt($slide.attr('data-slick-index'), 10);
       if (!isNaN(idx)) $slider.slick('slickGoTo', idx);
@@ -775,7 +806,7 @@ $(function () {
     infinite: true,
     arrows: false,
     dots: false,
-    speed: 1000,
+    speed: 800,
     cssEase: 'ease',
     focusOnSelect: true,
     draggable: true,
@@ -785,10 +816,31 @@ $(function () {
     autoplay: true,
     autoplaySpeed: 3000,
     pauseOnHover: false,
+
+    
     responsive: [
-      { breakpoint: 1400, settings: { slidesToShow: 3, centerPadding: '0px' } },
-      { breakpoint: 768, settings: { slidesToShow: 3, centerPadding: '0px' } },
-      { breakpoint: 480, settings: { slidesToShow: 1, centerPadding: '16px' } }
+      { breakpoint: 1400, settings: { slidesToShow: 3, centerMode: true, centerPadding: '0px' } },
+      // ★ 854px 이하: 한 장만, 페이드, 화살표 표시
+      { breakpoint: 854,  settings: { 
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          centerMode: false,
+          fade: true,
+          arrows: true,
+          dots: false,
+          focusOnSelect: false,
+          swipeToSlide: false
+        } 
+      },
+      { breakpoint: 480, settings: { 
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          centerMode: false,
+          fade: true,
+          arrows: true,
+          dots: false
+        } 
+      }
     ]
   });
 
@@ -797,6 +849,7 @@ $(function () {
     updateSlideLinks(slick);
   });
 });
+
 
 /* =======================
    연락처 폼 & 복사
