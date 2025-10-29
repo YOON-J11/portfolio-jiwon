@@ -190,10 +190,12 @@ body .site-header {
 }
 .container-cover p {
   position: absolute;
+  color: #999999;
   top: 50%;
   transform: translateY(-50%);
   left: 40px;
-  font-size: 14px;
+  font-size: 12px;
+  font-weight: 200;
   writing-mode: vertical-rl;
   text-orientation: mixed;
 }
@@ -266,8 +268,18 @@ body .site-header {
 }
 .container-about .about-scroll {
   height: 100%;
-  overflow: hidden;
+  overflow: auto;
   padding: 40px;
+  touch-action: pan-y;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.container-about .about-scroll::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 .container-about .about-scroll .about-panel {
   min-height: calc(100svh - 80px);
@@ -435,9 +447,9 @@ body .site-header {
 }
 .container-about .about-scroll .about-experience .experience-inner .experience-list li {
   display: grid;
-  grid-template-columns: 450px 1fr;
-  -moz-column-gap: 30px;
-       column-gap: 30px;
+  grid-template-columns: 1fr 1fr;
+  -moz-column-gap: 20px;
+       column-gap: 20px;
   align-items: center;
 }
 .container-about .about-scroll .about-experience .experience-inner .experience-list li .experience-list-header {
@@ -980,11 +992,93 @@ body .site-header {
   .container-works .works-inner .works-projects .projects-item {
     flex-direction: column;
     gap: 50px;
+    padding-bottom: 300px;
   }
   .container-works .works-inner .works-projects .projects-item.project2 .projects-item-info {
     order: 1;
   }
   .container-works .works-inner .works-projects .projects-item.project2 .projects-item-visual {
     order: 2;
+  }
+  .container-works .works-inner .works-projects .projects-item .projects-item-visual .sub-visual.project2-sub-visual:nth-of-type(2) {
+    right: inherit;
+    left: -210px;
+  }
+  .container-works .works-inner .works-projects .projects-item .projects-item-visual .sub-visual.project2-sub-visual:nth-of-type(3) {
+    right: -210px;
+  }
+  .container-works .works-inner .works-projects .projects-item .projects-item-visual .sub-visual.project3-sub-visual:nth-of-type(2) {
+    left: -150px;
+  }
+  .container-works .works-inner .works-projects .projects-item .projects-item-visual .sub-visual.project3-sub-visual:nth-of-type(3) {
+    top: 190px;
+    left: inherit;
+    right: -150px;
+  }
+}
+/* 태블릿 1120px*/
+@media screen and (max-width: 1120px) {
+  .container-cover .container-cover-inner .title {
+    margin-left: 40px;
+    transform: translateY(-40%);
+  }
+  .container-cover .container-cover-inner .title h1 {
+    font-size: 72px;
+  }
+  .container-cover .container-cover-inner .title h1:nth-child(2) {
+    margin-left: 0;
+  }
+  .container-cover .container-cover-inner .title div {
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .container-about .about-scroll .about-intro .intro-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+  .container-about .about-scroll .about-intro .intro-inner .intro-img-area {
+    margin-left: 0;
+  }
+  .container-about .about-scroll .about-intro .intro-inner .intro-text-area p .br-hide-mobile {
+    display: none;
+  }
+  .container-about .about-scroll .about-experience .experience-inner .experience-list li .experience-list-header .experience-company p {
+    font-size: 14px;
+  }
+  .container-about .about-scroll .about-experience .experience-inner .experience-list li .experience-list-header h3 {
+    font-size: 32px;
+  }
+  .container-about .about-scroll .about-experience .experience-inner .experience-list li .experience-list-header span {
+    font-size: 14px;
+  }
+}
+/* 모바일 830px*/
+@media screen and (max-width: 830px) {
+  .container-about .about-scroll .about-intro .intro-inner .intro-text-area h1 {
+    font-size: 32px;
+  }
+  .container-about .about-scroll .about-intro .intro-inner .intro-text-area h2 {
+    font-size: 24px;
+  }
+  .container-about .about-scroll .about-intro .intro-inner .intro-text-area p {
+    font-size: 16px;
+  }
+  .container-about .about-scroll .about-experience .experience-inner .experience-list li {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+  .container-about .about-scroll .about-experience .experience-inner .experience-list li .experience-list-header {
+    margin-bottom: 30px;
+  }
+  .container-about .about-scroll .about-experience .experience-inner .experience-list li::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    margin-top: 30px;
+    background-color: #999999;
   }
 }/*# sourceMappingURL=style.css.map */

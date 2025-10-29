@@ -279,10 +279,12 @@ body {
 
     p {
         position: absolute;
+        color: $color-muted;
         top: 50%;
         transform: translateY(-50%);
         left: 40px;
-        font-size: 14px;
+        font-size: 12px;
+        font-weight: 200;
         writing-mode: vertical-rl;
         text-orientation: mixed;
     }
@@ -371,8 +373,22 @@ body {
 
     .about-scroll {
         height: 100%;
-        overflow: hidden;
+        overflow: auto;
         padding: 40px;
+
+        touch-action: pan-y;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+            width: 0;
+            height: 0;
+        }
+
 
         .about-panel {
             min-height: calc(100svh - 80px);
@@ -590,8 +606,8 @@ body {
 
                     li {
                         display: grid;
-                        grid-template-columns: 450px 1fr;
-                        column-gap: 30px;
+                        grid-template-columns: 1fr 1fr;
+                        column-gap: 20px;
                         align-items: center;
 
                         .experience-list-header {
@@ -1278,6 +1294,13 @@ body {
 }
 
 
+
+
+
+
+
+
+
 /* 태블릿 1400px*/
 @media screen and (max-width: 1400px) {
     .container-works {
@@ -1286,6 +1309,7 @@ body {
                 .projects-item {
                     flex-direction: column;
                     gap: 50px;
+                    padding-bottom: 300px;
 
                     &.project2 {
                         .projects-item-info {
@@ -1294,6 +1318,179 @@ body {
 
                         .projects-item-visual {
                             order: 2;
+                        }
+                    }
+
+
+                    .projects-item-visual {
+                        .sub-visual {
+                            &.project2-sub-visual {
+
+                                &:nth-of-type(2) {
+                                    right: inherit;
+                                    left: -210px;
+                                }
+
+                                &:nth-of-type(3) {
+                                    right: -210px;
+                                }
+                            }
+
+                            &.project3-sub-visual {
+
+                                &:nth-of-type(2) {
+                                    left: -150px;
+                                }
+
+                                &:nth-of-type(3) {
+                                    top: 190px;
+                                    left: inherit;
+                                    right: -150px;
+                                }
+
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+/* 태블릿 1120px*/
+@media screen and (max-width: 1120px) {
+    .container-cover {
+        .container-cover-inner {
+            .title {
+                margin-left: 40px;
+                transform: translateY(-40%);
+
+                h1 {
+                    font-size: 72px;
+
+                    &:nth-child(2) {
+                        margin-left: 0;
+                    }
+                }
+
+                div {
+                    margin-left: 0;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+
+        }
+
+    }
+
+    .container-about {
+        .about-scroll {
+
+            .about-intro {
+                .intro-inner {
+                    flex-direction: column;
+                    text-align: center;
+
+                    .intro-img-area {
+                        margin-left: 0;
+                    }
+
+                    .intro-text-area {
+                        p {
+                            .br-hide-mobile {
+                                display: none;
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            .about-experience {
+                .experience-inner {
+                    .experience-list {
+                        li {
+                            .experience-list-header {
+                                .experience-company {
+                                    p {
+                                        font-size: 14px;
+                                    }
+                                }
+
+                                h3 {
+                                    font-size: 32px;
+                                }
+
+                                span {
+                                    font-size: 14px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+
+        }
+    }
+}
+
+
+
+/* 모바일 830px*/
+@media screen and (max-width: 830px) {
+    .container-about {
+        .about-scroll {
+            .about-intro {
+                .intro-inner {
+                    .intro-text-area {
+                        h1 {
+                            font-size: 32px;
+                        }
+
+                        h2 {
+                            font-size: 24px;
+                        }
+
+                        p {
+                            font-size: 16px;
+                        }
+                    }
+                }
+            }
+
+            .about-experience {
+                .experience-inner {
+                    .experience-list {
+                        li {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: start;
+
+                            .experience-list-header {
+                                margin-bottom: 30px;
+                            }
+
+                            &::after {
+                                content: "";
+                                display: block;
+                                width: 100%;
+                                height: 1px;
+                                margin-top: 30px;
+                                background-color: $color-muted;
+                            }
                         }
                     }
                 }
