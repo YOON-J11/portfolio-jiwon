@@ -1032,12 +1032,11 @@ body {
                     overflow: hidden;
 
                     img {
-                        filter: grayscale(100%) brightness(90%);
-                        transition: filter 0.4s ease;
+                        transition: all 0.4s ease;
                     }
 
                     &:hover img {
-                        filter: grayscale(0%) brightness(100%);
+                        transform: scale(1.1);
                     }
                 }
             }
@@ -1490,6 +1489,44 @@ body {
                                 height: 1px;
                                 margin-top: 30px;
                                 background-color: $color-muted;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .container-works {
+        .works-inner {
+            .works-projects {
+                .projects-item {
+                    .projects-item-visual {
+                        .main-visual {
+                            &.project1-main-visual {
+                                max-width: 430px;
+                            }
+
+                            &.project2-main-visual {
+                                max-width: 430px;
+                            }
+
+                            &.project3-main-visual {
+                                max-width: 470px;
+                            }
+                        }
+
+                        .sub-visual {
+                            &.project1-sub-visual {
+                                width: 300px;
+                            }
+
+                            &.project2-sub-visual {
+                                width: 300px;
+                            }
+
+                            &.project3-sub-visual {
+                                width: 300px;
                             }
                         }
                     }
