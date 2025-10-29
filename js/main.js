@@ -49,13 +49,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 // lotti 애니메이션 이미지
-lottie.loadAnimation({
-  container: document.getElementById('lottie-scroll-down'),
-  renderer: 'svg',
-  loop: true,
-  autoplay: true,
-  path: './assets/lottie/scroll-down-animation.json'
+document.querySelectorAll('.lottie-scroll-down').forEach((el) => {
+  lottie.loadAnimation({
+    container: el,
+    renderer: 'svg',
+    loop: true,
+    autoplay: true,
+    path: './assets/lottie/scroll-down-animation.json'
+  });
 });
+
 lottie.loadAnimation({
   container: document.getElementById('lottie-astronaut'),
   renderer: 'svg',
