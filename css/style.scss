@@ -148,7 +148,6 @@ body {
         z-index: 2002;
 
         .site-menu {
-            margin-top: 80px;
             display: flex;
             flex-direction: column;
 
@@ -186,41 +185,41 @@ body {
             }
         }
 
-        // .oter-menu {
-        //     margin-top: 50px;
-        //     display: flex;
-        //     gap: 10px;
-        //     justify-content: space-between;
+        .oter-menu {
+            display: none;
+            // display: flex;
+            margin-top: 50px;
+            gap: 10px;
+            flex-direction: column;
 
-        //     li {
-        //         flex: 1;
+            li {
+                flex: 1;
 
-        //         h3 {
-        //             font-size: 20px;
-        //             color: $color-text;
-        //             margin-bottom: 10px;
-        //         }
+                h3 {
+                    font-size: 20px;
+                    color: $color-text;
+                }
 
-        //         p {
-        //             font-size: 14px;
-        //             color: $color-text;
-        //         }
+                p {
+                    font-size: 14px;
+                    color: $color-text;
+                }
 
-        //         .social-icon {
-        //             display: flex;
-        //             gap: 10px;
+                .social-icon {
+                    display: flex;
+                    gap: 10px;
 
-        //             a {
-        //                 svg {
-        //                     width: 20px;
-        //                     height: 20px;
-        //                     fill: $color-muted;
-        //                 }
-        //             }
+                    a {
+                        svg {
+                            width: 20px;
+                            height: 20px;
+                            fill: $color-muted;
+                        }
+                    }
 
-        //         }
-        //     }
-        // }
+                }
+            }
+        }
     }
 
     &.open {
@@ -489,6 +488,8 @@ body {
                     border-radius: 30px;
                     display: flex;
                     gap: 9px;
+                    flex-wrap: wrap;
+                    justify-content: center;
 
                     position: relative;
 
@@ -499,9 +500,10 @@ body {
                         left: 8px;
                         height: calc(100% - 16px);
                         width: 0;
+                        height: 0;
                         border-radius: 19px;
-                        transform: translateX(0);
-                        transition: transform .3s ease, width .3s ease;
+                        transform: translate(0,0);
+                        transition: transform .24s ease, width .24s ease, height .24s ease;
                         z-index: 0;
                         background-color: $color-accent;
                     }
@@ -1690,6 +1692,25 @@ body {
             }
         }
     }
+
+    .container-contact{
+        .contact-inner{
+            gap: 3vw;
+            .contact-item{
+                flex-direction: column;
+                gap: 0;
+                .contact-item-left{
+                    .contact-form{
+                        gap: 2vw;
+                    }
+                }
+                .contact-item-right{
+                    flex-direction: row;
+                    transform: translateY(-3vw);
+                }
+            }
+        }
+    }
 }
 
 
@@ -1715,6 +1736,9 @@ body {
                     }
                 }
             }
+            .oter-menu{
+                display: flex;
+            }
 
         }
     }
@@ -1739,10 +1763,33 @@ body {
 
             .about-panel {
                 min-height: calc(100svh - 40px);
+
+                .about-title {
+                    h1 {
+                        font-size: 2rem;
+                    }
+
+                    p {
+                        font-size: 1rem;
+                    }
+                }
             }
 
             .about-intro {
                 .intro-inner {
+                    .intro-img-area {
+                        .moon {
+                            padding-top: 15vw;
+                            width: 40vw;
+                        }
+
+                        .lottie-astronaut {
+                            width: 37vw;
+                            top: 3vw;
+                            right: -10vw;
+                        }
+                    }
+
                     .intro-text-area {
                         h1 {
                             font-size: 2rem;
@@ -1756,6 +1803,7 @@ body {
 
                         p {
                             font-size: 1rem;
+
                             br {
                                 display: none;
                             }
@@ -1767,20 +1815,57 @@ body {
             .about-stack {
                 .stack-inner {
                     .stack-tab {
+                        max-width: 90vw;
+                        gap: 1vw;
+
                         .stack-tab-button {
-                            font-size: 16px;
+                            font-size: 1rem;
                         }
                     }
 
                     .stack-badges {
                         .stack-badge {
                             p {
-                                font-size: 14px;
+                                font-size: .8rem;
                             }
                         }
                     }
                 }
             }
+
+            .about-experience {
+                .experience-inner {
+                    .about-title {
+                        padding-top: 10vw;
+                    }
+
+                    .experience-list {
+                        li {
+                            .experience-list-header {
+                                .experience-company {
+                                    p {
+                                        font-size: 1rem;
+                                    }
+                                }
+                                h3{
+                                    font-size: 2rem;
+                                }
+                                span{font-size: 0.8rem;}
+                            }
+                            .experience-list-desc {
+                                .experience-desc-img{
+                                    gap: 8px;
+                                    img{
+                                        width: 25px;
+                                    }
+                                }
+                                p{font-size: 1rem;}
+                            }
+                        }
+                    }
+                }
+            }
+
         }
     }
 
@@ -1802,43 +1887,21 @@ body {
 
     .container-contact {
         padding: 20px;
-    }
-
-
-
-}
-
-/* 모바일 410px*/
-@media screen and (max-width: 410px) {
-
-    .container-cover {
-        .container-cover-inner {
-            .title {
-                h1 {
+        .contact-inner{
+            .contact-item{
+                .contact-item-right {
+                    display: none;
+                }
+            }
+            .footer{
+                p{
+                    white-space: nowrap;
+                    font-size: 0.8rem;
                 }
             }
         }
     }
 
-    .container-about {
-        .about-scroll {
-            .about-intro {
-                .intro-inner {
-                    .intro-img-area {
-                        .moon {
-                            width: 40vw;
-                        }
-
-                        .lottie-astronaut {
-                            width: 35vw;
-                            top: -50px;
-                            right: -50px;
-                        }
-                    }
 
 
-                }
-            }
-        }
-    }
 }

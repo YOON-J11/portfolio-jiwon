@@ -280,13 +280,13 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
 
 /* =======================
    #about 내부 스냅 (패널/탈출)
-   - 제스처는 "스냅 전용": move에서 기본 스크롤 차단
 ======================= */
+
 (() => {
   const aboutWrapper = document.querySelector('.about-scroll');
   if (!aboutWrapper) return;
 
-  // 내부 스크롤 컨텐츠 래핑
+  // 내부 컨텐츠 래핑 (이미 있으면 그대로 사용)
   let aboutContent = aboutWrapper.querySelector('.about-scroll-content');
   if (!aboutContent) {
     aboutContent = document.createElement('div');
@@ -294,7 +294,6 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
     while (aboutWrapper.firstChild) aboutContent.appendChild(aboutWrapper.firstChild);
     aboutWrapper.appendChild(aboutContent);
   }
-
   Object.assign(aboutContent.style, { display: 'flex', flexDirection: 'column', rowGap: '40px' });
   aboutContent.querySelectorAll('.about-panel').forEach(p => { p.style.margin = '0'; });
 
@@ -305,19 +304,22 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
   const panels = [...aboutContent.querySelectorAll('.about-panel')];
   if (!panels.length) return;
 
-  // 안전장치(내부 스크롤 컨텍스트 확보)
+  // 내부 스크롤 컨텍스트 확보
   aboutWrapper.style.overflow = aboutWrapper.style.overflow || 'auto';
   aboutWrapper.style.height = aboutWrapper.style.height || '100dvh';
   aboutWrapper.style.webkitOverflowScrolling = 'touch';
 
+  // 유틸
   const getPad = () => {
     const cs = getComputedStyle(aboutWrapper);
     return { top: parseFloat(cs.paddingTop) || 0, bottom: parseFloat(cs.paddingBottom) || 0 };
   };
-  const getWrapRect = () => aboutWrapper.getBoundingClientRect();
+  const wrapRect = () => aboutWrapper.getBoundingClientRect();
+  const wrapTopPx = () => wrapRect().top + getPad().top;
+  const wrapBottomPx = () => wrapRect().bottom - getPad().bottom;
 
-  const panelIndexByView = () => {
-    const mid = getWrapRect().top + getWrapRect().height / 2;
+  const currentPanelIndex = () => {
+    const mid = wrapRect().top + wrapRect().height / 2;
     let best = 0, dist = Infinity;
     panels.forEach((el, i) => {
       const r = el.getBoundingClientRect();
@@ -328,26 +330,22 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
     return best;
   };
 
-  const isAtTop = () => {
-    const padTop = getPad().top;
-    const firstTop = panels[0].getBoundingClientRect().top;
-    const wrapTop = getWrapRect().top + padTop;
-    return Math.abs(firstTop - wrapTop) <= 24 || firstTop >= wrapTop;
-  };
-  const isAtBottom = () => {
-    const padBottom = getPad().bottom;
-    const lastBottom = panels[panels.length - 1].getBoundingClientRect().bottom;
-    const wrapBottom = getWrapRect().bottom - padBottom;
-    return Math.abs(lastBottom - wrapBottom) <= 24 || lastBottom <= wrapBottom;
-  };
+  // 패널 기준 "시작/끝에 도달" 판정 (wrapper 뷰포트 기준)
+  const atPanelStart = (panel, eps = 2) => panel.getBoundingClientRect().top >= wrapTopPx() - eps;
+  const atPanelEnd   = (panel, eps = 2) => panel.getBoundingClientRect().bottom <= wrapBottomPx() + eps;
 
+  // 내부 스크롤 여유(전체 래퍼 기준) — 패널 내용이 래퍼보다 길 때 true
+  const canScrollDown = () => (aboutWrapper.scrollHeight - aboutWrapper.clientHeight - aboutWrapper.scrollTop) > 1;
+  const canScrollUp   = () => aboutWrapper.scrollTop > 1;
+
+  // 패널 스냅
   function snapToPanel(i) {
     if (i < 0 || i >= panels.length) return;
     const padTop = getPad().top;
     lockSnap();
     lenisAbout.scrollTo(panels[i], { duration: 0.9, offset: -padTop });
     waitSettleInner({ wrapper: aboutWrapper, panelEl: panels[i], padTop, tol: 1, settleFrames: 4, timeout: 2200 }, () => {
-      const targetTop = getWrapRect().top + padTop;
+      const targetTop = wrapTopPx();
       const curTop = panels[i].getBoundingClientRect().top;
       if (Math.abs(curTop - targetTop) > 1) lenisAbout.scrollTo(panels[i], { duration: 0.12, offset: -padTop });
       unlockSnap();
@@ -355,8 +353,9 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
   }
   window.snapToAboutPanel = snapToPanel;
 
+  // 바깥 컨테이너 인덱스
   const containerIndexByCenter = () => {
-    const mid = window.scrollY + innerHeight / 2;
+    const mid = (window.scrollY || 0) + innerHeight / 2;
     const containers = [...document.querySelectorAll('.container')];
     let best = 0, dist = Infinity;
     containers.forEach((el, i) => {
@@ -367,35 +366,34 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
     return best;
   };
 
+  // ===== Wheel: 내부 스크롤 우선, 패널 경계에서만 스냅 =====
   let innerAccAbs = 0, innerAccSigned = 0, innerFirstSign = 0, innerLastTs = 0;
+  const ACC_WINDOW_MS = 140, MIN_WHEEL_ABS = 6;
+  const normWheelDelta = (e) => (e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY);
 
-  function canScrollMoreDown() {
-    const wrap = aboutWrapper;
-    return (wrap.scrollHeight - wrap.clientHeight - wrap.scrollTop) > 1;
-  }
-  function canScrollMoreUp() {
-    const wrap = aboutWrapper;
-    return wrap.scrollTop > 1;
-  }
-
-  // wheel 스냅 (유지)
   const wheelHandler = (e) => {
     if (SNAP_LOCK || IS_SNAPPING) return;
 
-    const now = performance.now();
     const delta = normWheelDelta(e);
     if (delta === 0) return;
 
-    const cur = panelIndexByView();
-    const isLast = (cur >= panels.length - 1);
-    const isFirst = (cur <= 0);
+    const curIdx = currentPanelIndex();
+    const curPanel = panels[curIdx];
+    const isFirst = curIdx === 0;
+    const isLast  = curIdx === panels.length - 1;
 
-    if (delta > 0 && isLast && canScrollMoreDown()) return;
-    if (delta < 0 && isFirst && canScrollMoreUp()) return;
+    // 1) 방향에 여유 스크롤이 있고, 아직 패널 경계(시작/끝)에 도달하지 않았다 → 내부 스크롤 허용(리턴)
+    if (delta > 0) {
+      if (canScrollDown() && !atPanelEnd(curPanel)) return;   // 아래로: 끝에 아직 안 닿음 → 그냥 스크롤
+    } else {
+      if (canScrollUp() && !atPanelStart(curPanel)) return;   // 위로: 시작에 아직 안 닿음 → 그냥 스크롤
+    }
 
+    // 2) 패널 경계에 닿았고 계속 스크롤 → 스냅 동작
     e.preventDefault();
     e.stopPropagation();
 
+    const now = performance.now();
     if (now - innerLastTs > ACC_WINDOW_MS) { innerAccAbs = 0; innerAccSigned = 0; innerFirstSign = 0; }
     innerLastTs = now;
 
@@ -404,118 +402,125 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
 
     innerAccAbs += Math.abs(delta);
     innerAccSigned += delta;
-
     if (innerAccAbs < MIN_WHEEL_ABS) return;
 
     const dir = Math.sign(innerAccSigned) || innerFirstSign;
-
     innerAccAbs = 0; innerAccSigned = 0; innerFirstSign = 0; innerLastTs = 0;
 
     if (dir > 0) {
-      if (isAtBottom() && isLast) {
+      // 아래로: 패널 끝에서 다음으로
+      if (isLast) {
+        // 마지막 패널(experience) 끝 → 다음 컨테이너로 탈출
         aboutWrapper.blur();
         window.snapToContainer?.(containerIndexByCenter() + 1);
       } else {
-        const next = Math.min(cur + 1, panels.length - 1);
-        if (next !== cur) snapToPanel(next);
+        snapToPanel(curIdx + 1); // intro → stack (요구사항)
       }
     } else {
-      if (isAtTop() && isFirst) {
+      // 위로: 패널 시작에서 이전으로
+      if (isFirst) {
+        // 첫 패널(intro) 시작 → 이전 컨테이너로
         aboutWrapper.blur();
         window.snapToContainer?.(containerIndexByCenter() - 1);
       } else {
-        const prev = Math.max(cur - 1, 0);
-        if (prev !== cur) snapToPanel(prev);
+        snapToPanel(curIdx - 1);
       }
     }
   };
   aboutWrapper.addEventListener('wheel', wheelHandler, { passive: false });
 
-  // === about 내부 터치 스와이프: "스냅 전용" (일반 스크롤 제거)
-  const TOUCH_MIN_ABS_INNER = 32;     // 28~40 추천
-  const TOUCH_MAX_TIME_INNER = 700;   // 500~700 추천
-  let aStartY = 0, aLastY = 0, aAccumY = 0, aStartT = 0, aMoved = false, aActive = false;
+  // ===== Touch: 내부 스크롤 우선, 경계에서만 스냅 =====
+  const TOUCH_MIN_ABS = 32, TOUCH_MAX_TIME = 700;
+  let tStartY = 0, tLastY = 0, tAccumY = 0, tStartT = 0, tMoved = false, tActive = false;
 
   aboutWrapper.addEventListener('touchstart', (e) => {
     if (SNAP_LOCK || IS_SNAPPING) return;
-    aActive = true;
-    aMoved = false;
-    aStartY = aLastY = e.touches[0].clientY;
-    aAccumY = 0;
-    aStartT = performance.now();
+    tActive = true; tMoved = false;
+    tStartY = tLastY = e.touches[0].clientY;
+    tAccumY = 0;
+    tStartT = performance.now();
   }, { passive: true });
 
-  // 기본 스크롤 차단 → 제스처만으로 스냅
   aboutWrapper.addEventListener('touchmove', (e) => {
-    if (!aActive || SNAP_LOCK || IS_SNAPPING) return;
+    if (!tActive || SNAP_LOCK || IS_SNAPPING) return;
     const y = e.touches[0].clientY;
-    const dy = aLastY - y; // 위로 스와이프: +
-    aAccumY += dy;
-    aLastY = y;
-    if (Math.abs(aAccumY) > 2) aMoved = true;
+    const dy = tLastY - y; // 위로 스와이프: +
+    tAccumY += dy;
+    tLastY = y;
+    if (Math.abs(tAccumY) > 2) tMoved = true;
 
-    e.preventDefault(); // 중요
-  }, { passive: false });
+    // 터치에서는 기본 스크롤을 막지 않는다(내부 스크롤 우선 허용)
+    // 다만 iOS에서 바깥으로 튀는걸 막고 싶다면 overscroll-behavior로 제어
+  }, { passive: true });
 
   aboutWrapper.addEventListener('touchend', (e) => {
-    if (!aActive || SNAP_LOCK || IS_SNAPPING) return;
-    aActive = false;
+    if (!tActive || SNAP_LOCK || IS_SNAPPING) return;
+    tActive = false;
 
-    const dt  = performance.now() - aStartT;
-    const abs = Math.abs(aAccumY);
-    if (!aMoved || abs < TOUCH_MIN_ABS_INNER || dt > TOUCH_MAX_TIME_INNER) return;
+    const dt = performance.now() - tStartT;
+    const abs = Math.abs(tAccumY);
+    if (!tMoved || abs < TOUCH_MIN_ABS || dt > TOUCH_MAX_TIME) return;
 
-    e.preventDefault();
-
-    const dir = Math.sign(aAccumY); // +: 아래(다음), -: 위(이전)
-    const cur = panelIndexByView();
-    const isLast = (cur >= panels.length - 1);
-    const isFirst = (cur <= 0);
+    const dir = Math.sign(tAccumY); // +: 아래(다음), -: 위(이전)
+    const curIdx = currentPanelIndex();
+    const curPanel = panels[curIdx];
+    const isFirst = curIdx === 0;
+    const isLast  = curIdx === panels.length - 1;
 
     if (dir > 0) {
-      if (isAtBottom() && isLast) {
+      // 아래로: 끝에 안 닿았으면 내부 스크롤로 종료
+      if (canScrollDown() && !atPanelEnd(curPanel)) return;
+      if (isLast) {
         aboutWrapper.blur();
         window.snapToContainer?.(containerIndexByCenter() + 1);
       } else {
-        const next = Math.min(cur + 1, panels.length - 1);
-        if (next !== cur) snapToPanel(next);
+        snapToPanel(curIdx + 1);
       }
     } else {
-      if (isAtTop() && isFirst) {
+      // 위로: 시작에 안 닿았으면 내부 스크롤로 종료
+      if (canScrollUp() && !atPanelStart(curPanel)) return;
+      if (isFirst) {
         aboutWrapper.blur();
         window.snapToContainer?.(containerIndexByCenter() - 1);
       } else {
-        const prev = Math.max(cur - 1, 0);
-        if (prev !== cur) snapToPanel(prev);
+        snapToPanel(curIdx - 1);
       }
     }
-  }, { passive: false });
+  }, { passive: true });
 
-  // 키보드(유지)
+  // 키보드(그대로 유지, 패널 경계 기준 스냅)
   aboutWrapper.addEventListener('keydown', (e) => {
     if (SNAP_LOCK || IS_SNAPPING) return;
     const nextKeys = ['ArrowDown', 'PageDown', 'Space'];
     const prevKeys = ['ArrowUp', 'PageUp'];
     if (![...prevKeys, ...nextKeys].includes(e.key)) return;
     e.preventDefault();
-    const cur = panelIndexByView();
+
+    const curIdx = currentPanelIndex();
+    const curPanel = panels[curIdx];
+    const isFirst = curIdx === 0;
+    const isLast  = curIdx === panels.length - 1;
+
     if (nextKeys.includes(e.key)) {
-      if (isAtBottom() && cur >= panels.length - 1) {
+      if (canScrollDown() && !atPanelEnd(curPanel)) return; // 내부 여유 먼저 허용
+      if (isLast) {
         aboutWrapper.blur();
         window.snapToContainer?.(containerIndexByCenter() + 1);
       } else {
-        snapToPanel(Math.min(cur + 1, panels.length - 1));
+        snapToPanel(curIdx + 1);
       }
     } else {
-      if (isAtTop() && cur <= 0) {
+      if (canScrollUp() && !atPanelStart(curPanel)) return; // 내부 여유 먼저 허용
+      if (isFirst) {
         aboutWrapper.blur();
         window.snapToContainer?.(containerIndexByCenter() - 1);
       } else {
-        snapToPanel(Math.max(cur - 1, 0));
+        snapToPanel(curIdx - 1);
       }
     }
   });
 
+  // 포커스 핸들링
   const containerAbout = document.querySelector('.container-about');
   if (containerAbout) {
     const io = new IntersectionObserver((ents) => {
@@ -524,6 +529,7 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
     io.observe(containerAbout);
   }
 })();
+
 
 
 
@@ -705,19 +711,30 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
 /* =======================
    stack tab
 ======================= */
+/* =======================
+   stack tab (wrap 대응)
+======================= */
 (function () {
   const tab = document.querySelector('.about-stack .stack-tab');
-  const ind = tab.querySelector('.stack-tab-activebg');
-  const btns = [...tab.querySelectorAll('.stack-tab-button')];
+  const ind = tab?.querySelector('.stack-tab-activebg');
+  const btns = tab ? [...tab.querySelectorAll('.stack-tab-button')] : [];
   const badges = document.querySelector('.about-stack .stack-badges');
   if (!tab || !ind || !btns.length || !badges) return;
 
-  const padL = parseFloat(getComputedStyle(tab).paddingLeft) || 0;
-
   function moveIndicator(btn) {
-    const x = btn.offsetLeft - padL;
-    ind.style.width = btn.offsetWidth + 'px';
-    ind.style.transform = `translateX(${x}px)`;
+    const tabRect = tab.getBoundingClientRect();
+    const btnRect = btn.getBoundingClientRect();
+    const cs = getComputedStyle(tab);
+    const padL = parseFloat(cs.paddingLeft) || 0;
+    const padT = parseFloat(cs.paddingTop)  || 0;
+
+    // 버튼 화면좌표 -> 탭 내부좌표로 변환
+    const x = (btnRect.left - tabRect.left) - padL + tab.scrollLeft;
+    const y = (btnRect.top  - tabRect.top)  - padT  + tab.scrollTop;
+
+    ind.style.width  = btn.offsetWidth  + 'px';
+    ind.style.height = btn.offsetHeight + 'px';
+    ind.style.transform = `translate(${x}px, ${y}px)`;
   }
 
   function setActiveButton(targetBtn) {
@@ -731,13 +748,23 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
 
   btns.forEach(btn => btn.addEventListener('click', () => {
     setActiveButton(btn);
-    moveIndicator(btn);
     applyFilter(btn.dataset.filter);
+    moveIndicator(btn);
+
+    // 작은 화면에서 활성 버튼이 가려지면 탭 내부 스크롤로 중앙에 보이게
+    const targetX = btn.offsetLeft - (tab.clientWidth  - btn.offsetWidth) / 2;
+    const targetY = btn.offsetTop  - (tab.clientHeight - btn.offsetHeight) / 2;
+    tab.scrollTo({ left: targetX, top: targetY, behavior: 'smooth' });
   }));
 
-  const recalc = () => moveIndicator(btns.find(b => b.classList.contains('active-button')) || btns[0]);
+  const recalc = () => moveIndicator(
+    btns.find(b => b.classList.contains('active-button')) || btns[0]
+  );
+
+  // 줄바꿈/리플로우, 스크롤, 리사이즈 모두에서 위치 재계산
   window.addEventListener('resize', recalc);
   window.addEventListener('load', recalc);
+  tab.addEventListener('scroll', recalc, { passive: true });
 })();
 
 
