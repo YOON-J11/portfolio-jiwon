@@ -1477,6 +1477,12 @@ body {
 
 /* 모바일 854px*/
 @media screen and (max-width: 854px) {
+    .container-cover {
+        p {
+            display: none;
+        }
+    }
+
     .container-about {
         .about-scroll {
             .about-intro {
@@ -1531,8 +1537,9 @@ body {
                 h1 {
                     font-size: 40px;
                 }
-                p{
-                    .display-none-854{
+
+                p {
+                    .display-none-854 {
                         display: none;
                     }
                 }
@@ -1688,21 +1695,21 @@ body {
 
 /* 모바일 640px*/
 @media screen and (max-width: 640px) {
-    .site-header{
+    .site-header {
         padding: 20px;
 
-        .menu-btn{
-            span{
+        .menu-btn {
+            span {
                 width: 20px;
             }
         }
 
-        .gnb{
+        .gnb {
             padding: 20px;
 
-            .site-menu{
-                li{
-                    a{
+            .site-menu {
+                li {
+                    a {
                         font-size: 24px;
                         padding: 8px;
                     }
@@ -1711,13 +1718,14 @@ body {
 
         }
     }
+
     .container-cover {
         padding: 20px;
-        p{
-            left: 20px;
-        }
+
         .container-cover-inner {
             .title {
+                margin-left: 0;
+
                 h1 {
                     font-size: 52px;
                 }
@@ -1728,34 +1736,44 @@ body {
     .container-about {
         .about-scroll {
             padding: 20px;
+
+            .about-panel {
+                min-height: calc(100svh - 40px);
+            }
+
             .about-intro {
                 .intro-inner {
                     .intro-text-area {
                         h1 {
-                            font-size: 24px;
-                            margin-bottom: 18px;
+                            font-size: 2rem;
+                            margin-bottom: .5rem;
                         }
 
                         h2 {
-                            font-size: 20px;
-                            margin-bottom: 18px;
+                            font-size: 1.3rem;
+                            margin-bottom: .5rem;
                         }
 
                         p {
-                            font-size: 14px;
+                            font-size: 1rem;
+                            br {
+                                display: none;
+                            }
                         }
                     }
                 }
             }
-            .about-stack{
-                .stack-inner{
-                    .stack-tab{
+
+            .about-stack {
+                .stack-inner {
+                    .stack-tab {
                         .stack-tab-button {
                             font-size: 16px;
                         }
                     }
-                    .stack-badges{
-                        .stack-badge{
+
+                    .stack-badges {
+                        .stack-badge {
                             p {
                                 font-size: 14px;
                             }
@@ -1767,13 +1785,15 @@ body {
     }
 
     .container-works {
-        .works-inner{
+        .works-inner {
             padding: 20px;
-            .works-title{
+
+            .works-title {
                 h1 {
                     font-size: 32px;
                 }
-                p{
+
+                p {
                     font-size: 14px;
                 }
             }
@@ -1786,4 +1806,39 @@ body {
 
 
 
+}
+
+/* 모바일 410px*/
+@media screen and (max-width: 410px) {
+
+    .container-cover {
+        .container-cover-inner {
+            .title {
+                h1 {
+                }
+            }
+        }
+    }
+
+    .container-about {
+        .about-scroll {
+            .about-intro {
+                .intro-inner {
+                    .intro-img-area {
+                        .moon {
+                            width: 40vw;
+                        }
+
+                        .lottie-astronaut {
+                            width: 35vw;
+                            top: -50px;
+                            right: -50px;
+                        }
+                    }
+
+
+                }
+            }
+        }
+    }
 }

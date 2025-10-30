@@ -1074,6 +1074,9 @@ body .site-header {
 }
 /* 모바일 854px*/
 @media screen and (max-width: 854px) {
+  .container-cover p {
+    display: none;
+  }
   .container-about .about-scroll .about-intro .intro-inner .intro-text-area h1 {
     font-size: 32px;
   }
@@ -1230,8 +1233,8 @@ body .site-header {
   .container-cover {
     padding: 20px;
   }
-  .container-cover p {
-    left: 20px;
+  .container-cover .container-cover-inner .title {
+    margin-left: 0;
   }
   .container-cover .container-cover-inner .title h1 {
     font-size: 52px;
@@ -1239,16 +1242,22 @@ body .site-header {
   .container-about .about-scroll {
     padding: 20px;
   }
+  .container-about .about-scroll .about-panel {
+    min-height: calc(100svh - 40px);
+  }
   .container-about .about-scroll .about-intro .intro-inner .intro-text-area h1 {
-    font-size: 24px;
-    margin-bottom: 18px;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
   }
   .container-about .about-scroll .about-intro .intro-inner .intro-text-area h2 {
-    font-size: 20px;
-    margin-bottom: 18px;
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
   }
   .container-about .about-scroll .about-intro .intro-inner .intro-text-area p {
-    font-size: 14px;
+    font-size: 1rem;
+  }
+  .container-about .about-scroll .about-intro .intro-inner .intro-text-area p br {
+    display: none;
   }
   .container-about .about-scroll .about-stack .stack-inner .stack-tab .stack-tab-button {
     font-size: 16px;
@@ -1267,5 +1276,16 @@ body .site-header {
   }
   .container-contact {
     padding: 20px;
+  }
+}
+/* 모바일 410px*/
+@media screen and (max-width: 410px) {
+  .container-about .about-scroll .about-intro .intro-inner .intro-img-area .moon {
+    width: 40vw;
+  }
+  .container-about .about-scroll .about-intro .intro-inner .intro-img-area .lottie-astronaut {
+    width: 35vw;
+    top: -50px;
+    right: -50px;
   }
 }/*# sourceMappingURL=style.css.map */
