@@ -538,6 +538,7 @@ body .site-header {
   height: 100%;
   padding: 40px;
   overflow-y: auto;
+  overflow-x: hidden;
   scrollbar-width: none;
   -ms-overflow-style: none;
   overscroll-behavior: contain;
