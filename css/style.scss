@@ -370,16 +370,15 @@ body {
     position: relative;
 
     .about-scroll {
-        height: 100%;
-        overflow: auto;
+        height: 100svh;
+        overflow: hidden;
         padding: 40px;
 
         touch-action: pan-y;
-        overscroll-behavior: contain;
+        overscroll-behavior-y: contain;
+        /* 내부에서 끝까지 갔다가도 바깥으로 바로 전파 X */
         -webkit-overflow-scrolling: touch;
 
-        scrollbar-width: none;
-        -ms-overflow-style: none;
 
         &::-webkit-scrollbar {
             display: none;
@@ -502,7 +501,7 @@ body {
                         width: 0;
                         height: 0;
                         border-radius: 19px;
-                        transform: translate(0,0);
+                        transform: translate(0, 0);
                         transition: transform .24s ease, width .24s ease, height .24s ease;
                         z-index: 0;
                         background-color: $color-accent;
@@ -809,9 +808,12 @@ body {
                             display: inline-flex;
                             align-items: center;
                             width: 30px;
+                            height: 30px;
 
                             svg {
                                 color: $color-text;
+                                width: 100%;
+                                height: 100%;
                             }
 
                             &:hover svg {
@@ -982,6 +984,8 @@ body {
                     margin-top: 30px;
                     text-align: center;
 
+                    overflow: hidden;
+
                     .caption-tag {
                         color: $color-bg;
                         font-size: 14px;
@@ -1008,6 +1012,18 @@ body {
                         opacity: 0;
                         transition: opacity .25s ease;
                     }
+
+                    .cap {
+                            opacity: 0;
+                            transform: translateY(8px);
+                            transition: opacity 500ms ease, transform 500ms ease;
+                            will-change: opacity, transform;
+                        }
+
+                        &.is-in .cap {
+                            opacity: 1;
+                            transform: translateY(0);
+                        }
                 }
             }
         }
@@ -1152,7 +1168,7 @@ body {
 
             p {
                 font-size: 16px;
-                line-height: 1;
+                line-height: 1.5;
             }
         }
 
@@ -1318,6 +1334,7 @@ body {
             p {
                 font-weight: 300;
                 font-size: 12px;
+                color: $color-muted;
             }
         }
     }
@@ -1668,6 +1685,7 @@ body {
                             bottom: -74px;
                             right: 0;
                         }
+
                     }
                 }
             }
@@ -1694,18 +1712,21 @@ body {
         }
     }
 
-    .container-contact{
-        .contact-inner{
+    .container-contact {
+        .contact-inner {
             gap: 3vw;
-            .contact-item{
+
+            .contact-item {
                 flex-direction: column;
                 gap: 0;
-                .contact-item-left{
-                    .contact-form{
+
+                .contact-item-left {
+                    .contact-form {
                         gap: 2vw;
                     }
                 }
-                .contact-item-right{
+
+                .contact-item-right {
                     flex-direction: row;
                     transform: translateY(-3vw);
                 }
@@ -1737,7 +1758,8 @@ body {
                     }
                 }
             }
-            .oter-menu{
+
+            .oter-menu {
                 display: flex;
             }
 
@@ -1803,7 +1825,8 @@ body {
                         }
 
                         p {
-                            font-size: 1rem;
+                            font-size: 0.9rem;
+                            line-height: 1.5;
 
                             br {
                                 display: none;
@@ -1848,19 +1871,28 @@ body {
                                         font-size: 1rem;
                                     }
                                 }
-                                h3{
+
+                                h3 {
                                     font-size: 2rem;
                                 }
-                                span{font-size: 0.8rem;}
+
+                                span {
+                                    font-size: 0.8rem;
+                                }
                             }
+
                             .experience-list-desc {
-                                .experience-desc-img{
+                                .experience-desc-img {
                                     gap: 8px;
-                                    img{
+
+                                    img {
                                         width: 25px;
                                     }
                                 }
-                                p{font-size: 1rem;}
+
+                                p {
+                                    font-size: 1rem;
+                                }
                             }
                         }
                     }
@@ -1883,19 +1915,47 @@ body {
                     font-size: 14px;
                 }
             }
+
+            .works-projects {
+                .projects-item {
+                    .projects-item-info {
+                        gap: 1rem;
+
+                        .projects-item-info-top {
+                            .projects-item-info-title {
+                                flex-direction: column;
+                                gap: 0;
+                                align-items: start;
+
+                                h2 {
+                                    font-size: 2rem;
+                                    line-height: 1.2;
+                                }
+
+                                p {
+                                    font-size: 1rem;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
     .container-contact {
         padding: 20px;
-        .contact-inner{
-            .contact-item{
+
+        .contact-inner {
+            .contact-item {
                 .contact-item-right {
                     display: none;
                 }
             }
-            .footer{
-                p{
+
+            .footer {
+                bottom: 20px;
+                p {
                     white-space: nowrap;
                     font-size: 0.8rem;
                 }

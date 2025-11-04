@@ -292,14 +292,13 @@ body .site-header {
   position: relative;
 }
 .container-about .about-scroll {
-  height: 100%;
-  overflow: auto;
+  height: 100svh;
+  overflow: hidden;
   padding: 40px;
   touch-action: pan-y;
-  overscroll-behavior: contain;
+  overscroll-behavior-y: contain;
+  /* 내부에서 끝까지 갔다가도 바깥으로 바로 전파 X */
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
 }
 .container-about .about-scroll::-webkit-scrollbar {
   display: none;
@@ -636,9 +635,12 @@ body .site-header {
   display: inline-flex;
   align-items: center;
   width: 30px;
+  height: 30px;
 }
 .container-works .works-inner .works-projects .projects-item .projects-item-info .projects-item-info-links a svg {
   color: #EDEDED;
+  width: 100%;
+  height: 100%;
 }
 .container-works .works-inner .works-projects .projects-item .projects-item-info .projects-item-info-links a:hover svg {
   color: #00FFB7;
@@ -762,6 +764,7 @@ body .site-header {
 .container-works .works-inner .works-publishing .publishing-items-wrap .slide-caption {
   margin-top: 30px;
   text-align: center;
+  overflow: hidden;
 }
 .container-works .works-inner .works-publishing .publishing-items-wrap .slide-caption .caption-tag {
   color: #161616;
@@ -786,6 +789,16 @@ body .site-header {
   margin-top: 8px;
   opacity: 0;
   transition: opacity 0.25s ease;
+}
+.container-works .works-inner .works-publishing .publishing-items-wrap .slide-caption .cap {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 500ms ease, transform 500ms ease;
+  will-change: opacity, transform;
+}
+.container-works .works-inner .works-publishing .publishing-items-wrap .slide-caption.is-in .cap {
+  opacity: 1;
+  transform: translateY(0);
 }
 .container-works .works-inner .works-design {
   margin-top: 500px;
@@ -900,7 +913,7 @@ body .site-header {
 }
 .container-contact .contact-inner .contact-title p {
   font-size: 16px;
-  line-height: 1;
+  line-height: 1.5;
 }
 .container-contact .contact-inner .contact-item {
   display: flex;
@@ -1033,6 +1046,7 @@ body .site-header {
 .container-contact .contact-inner .footer p {
   font-weight: 300;
   font-size: 12px;
+  color: #999999;
 }
 
 /* 태블릿 1400px*/
@@ -1315,7 +1329,8 @@ body .site-header {
     margin-bottom: 0.5rem;
   }
   .container-about .about-scroll .about-intro .intro-inner .intro-text-area p {
-    font-size: 1rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
   }
   .container-about .about-scroll .about-intro .intro-inner .intro-text-area p br {
     display: none;
@@ -1360,11 +1375,29 @@ body .site-header {
   .container-works .works-inner .works-title p {
     font-size: 14px;
   }
+  .container-works .works-inner .works-projects .projects-item .projects-item-info {
+    gap: 1rem;
+  }
+  .container-works .works-inner .works-projects .projects-item .projects-item-info .projects-item-info-top .projects-item-info-title {
+    flex-direction: column;
+    gap: 0;
+    align-items: start;
+  }
+  .container-works .works-inner .works-projects .projects-item .projects-item-info .projects-item-info-top .projects-item-info-title h2 {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+  .container-works .works-inner .works-projects .projects-item .projects-item-info .projects-item-info-top .projects-item-info-title p {
+    font-size: 1rem;
+  }
   .container-contact {
     padding: 20px;
   }
   .container-contact .contact-inner .contact-item .contact-item-right {
     display: none;
+  }
+  .container-contact .contact-inner .footer {
+    bottom: 20px;
   }
   .container-contact .contact-inner .footer p {
     white-space: nowrap;
