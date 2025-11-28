@@ -1,19 +1,119 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Jiwon's gallery</title>
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
     <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="./css/style.css">
+
 </head>
+
 <body>
-    <header></header>
-    <main></main>
+    <!-- <div id="particles-js"></div> -->
+    <header>
+    </header>
+    <main>
+        <div class="title">
+            <h1>Jiwon's Gallery</h1>
+            <p>모든 작업물을 한 곳에 모았습니다.</p>
+        </div>
+        <div class="tab">
+            <div class="tab-activebg"></div>
+
+            <button class="tab-button active-button" data-filter="all">All</button>
+            <button class="tab-button" data-filter="project">Project</button>
+            <button class="tab-button" data-filter="publishing">Publishing</button>
+            <button class="tab-button" data-filter="design">Design</button>
+            <button class="tab-button" data-filter="etc">Etc</button>
+        </div>
+        <div class="list" data-filter="all">
+            <article class="gallery-item" data-category="publishing design" data-year="2018">
+                <a href="#">
+                    <div class="gallery-thumb">
+                        <img src="./img/2018_portfolio/thumb.png" >
+                    </div>
+                    <div class="gallery-meta">
+                        <span class="gallery-year">2018</span>
+                        <h2 class="gallery-title">2018 PORTFOLIO</h2>
+                        <p class="gallery-tags">#Publishing #Design #Landing</p>
+                    </div>
+                </a>
+            </article>
+            <article class="gallery-item" data-category="design" data-year="2014">
+                <a href="#">
+                    <div class="gallery-thumb">
+                        <img src="./images/gallery/audien-thumb.jpg" >
+                    </div>
+                    <div class="gallery-meta">
+                        <span class="gallery-year">2014</span>
+                        <h2 class="gallery-title">Design Project : Lighthouse</h2>
+                        <p class="gallery-tags">#Design #Icon #Symbol #ProductDesign</p>
+                    </div>
+                </a>
+            </article>
+            <article class="gallery-item" data-category="publishing" data-year="2024">
+                <a href="#">
+                    <div class="gallery-thumb">
+                        <img src="./images/gallery/btime-thumb.jpg" >
+                    </div>
+                    <div class="gallery-meta">
+                        <span class="gallery-year">2024</span>
+                        <h2 class="gallery-title">TOSS Web Page</h2>
+                        <p class="gallery-tags">#Publishing #Responsive #Landing</p>
+                    </div>
+                </a>
+            </article>
+            <article class="gallery-item" data-category="design" data-year="2023">
+                <a href="#">
+                    <div class="gallery-thumb">
+                        <img src="./images/gallery/audien-thumb.jpg" >
+                    </div>
+                    <div class="gallery-meta">
+                        <span class="gallery-year">2023</span>
+                        <h2 class="gallery-title">B-Time App UX/UI Design</h2>
+                        <p class="gallery-tags">#UIUX #AppDesign #Prototype</p>
+                    </div>
+                </a>
+            </article>
+            <article class="gallery-item" data-category="project" data-year="2023">
+                <a href="#">
+                    <div class="gallery-thumb">
+                        <img src="./images/gallery/audien-thumb.jpg" >
+                    </div>
+                    <div class="gallery-meta">
+                        <span class="gallery-year">2023</span>
+                        <h2 class="gallery-title">Audien App UX/UI Design</h2>
+                        <p class="gallery-tags">#UIUX #AppDesign #Prototype</p>
+                    </div>
+                </a>
+            </article>
+            <article class="gallery-item" data-category="etc" data-year="2023">
+                <a href="#">
+                    <div class="gallery-thumb">
+                        <img src="./images/gallery/audien-thumb.jpg">
+                    </div>
+                    <div class="gallery-meta">
+                        <span class="gallery-year">2023</span>
+                        <h2 class="gallery-title">기타</h2>
+                        <p class="gallery-tags">#UIUX #AppDesign #Prototype</p>
+                    </div>
+                </a>
+            </article>
+            
+        </div>
+        <div class="pagination"></div>
+    </main>
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- tsParticles Stars -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/@tsparticles/preset-stars@3/tsparticles.preset.stars.bundle.min.js"></script>
     <script defer src="./js/gallery.js"></script>
 </body>
+
 </html>

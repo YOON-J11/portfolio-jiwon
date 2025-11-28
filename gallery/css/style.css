@@ -1,1 +1,124 @@
-/*# sourceMappingURL=style.css.map */
+html,
+body {
+  height: auto !important;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto !important;
+}
+
+body {
+  background-color: #161616;
+  color: #EDEDED;
+  cursor: url("../../assets/img/cursor.png"), auto;
+}
+body main {
+  max-width: 1450px;
+  background-color: rgba(153, 153, 153, 0.1960784314);
+  padding: 40px;
+  margin: 0 auto;
+}
+body main .title {
+  text-align: center;
+  margin-bottom: 40px;
+}
+body main .title h1 {
+  font-size: 45px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #EDEDED;
+}
+body main .title p {
+  font-size: 16px;
+  color: #EDEDED;
+}
+body main .tab {
+  flex: 0 0 auto;
+  width: -moz-fit-content;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto 40px;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 8px;
+  border: 1px solid #00FFB7;
+  border-radius: 30px;
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: relative;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+body main .tab::-webkit-scrollbar {
+  display: none;
+}
+body main .tab .tab-activebg {
+  display: block;
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  height: calc(100% - 16px);
+  width: 0;
+  height: 0;
+  border-radius: 19px;
+  transform: translate(0, 0);
+  transition: transform 0.24s ease, width 0.24s ease, height 0.24s ease;
+  z-index: 0;
+  background-color: #00FFB7;
+}
+body main .tab .tab-button {
+  color: #EDEDED;
+  font-size: 16px;
+  line-height: 1;
+  padding: 10px 14px;
+  border-radius: 19px;
+  border: none;
+  background: transparent;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  white-space: nowrap;
+}
+body main .tab .tab-button.active-button {
+  color: #161616;
+}
+body main .list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 20px;
+}
+body main .list .gallery-item a .gallery-thumb {
+  width: 100%;
+  background-color: rgba(0, 255, 183, 0.2745098039);
+  border-radius: 10px;
+  height: 200px;
+  overflow: hidden;
+}
+body main .list .gallery-item a .gallery-thumb img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  transition: all 1s ease;
+}
+body main .list .gallery-item a .gallery-thumb:hover img {
+  scale: 1.2;
+}
+body main .list .gallery-item a .gallery-meta {
+  margin-top: 10px;
+}
+body main .list .gallery-item a .gallery-meta .gallery-title {
+  font-size: 18px;
+  font-weight: 900;
+}
+body main .list .gallery-item a .gallery-meta .gallery-tags {
+  font-size: 12px;
+}
+body main .list .gallery-item a .gallery-meta .gallery-year {
+  font-size: 12px;
+  padding: 3px 6px;
+  border-radius: 10px;
+  color: #161616;
+  background-color: #00FFB7;
+}/*# sourceMappingURL=style.css.map */

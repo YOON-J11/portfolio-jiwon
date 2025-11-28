@@ -1,5 +1,8 @@
 // Lenis 초기화
-const lenis = new Lenis({ smoothWheel: true, smoothTouch: false });
+const lenis = new Lenis({
+  smoothWheel: false,
+  smoothTouch: false
+});
 window.lenis = lenis;
 
 
@@ -294,8 +297,8 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
   const lenisAbout = new Lenis({
     wrapper: aboutWrapper,
     content: aboutContent,
-    smoothWheel: true,
-    smoothTouch: true,
+    smoothWheel: false,
+    smoothTouch: false,
     lerp: 0.09
   });
   window.lenisAbout = lenisAbout;
@@ -476,8 +479,8 @@ function waitSettleInner({ wrapper, panelEl, padTop = 0, tol = 1, settleFrames =
   const lenisWorks = new Lenis({
     wrapper: worksInner,
     content: worksInner,
-    smoothWheel: true,
-    smoothTouch: true,
+    smoothWheel: false,
+    smoothTouch: false,
     lerp: 0.08
   });
   window.lenisWorks = lenisWorks;
