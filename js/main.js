@@ -757,7 +757,7 @@ $(function () {
   const copyBtn = document.getElementById('copyEmailBtn');
   const copyStatus = document.getElementById('copyStatus');
 
-  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xovpjlvp';
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mjknrbvj';
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   function validate() {
@@ -822,7 +822,7 @@ $(function () {
 
   if (copyBtn) {
     copyBtn.addEventListener('click', async () => {
-      const email = copyBtn.dataset.email || 'yjw5619@gmail.com';
+      const email = copyBtn.dataset.email || 'desigr.jw@gmail.com';
       try {
         await navigator.clipboard.writeText(email);
         if (copyStatus) {

@@ -15,12 +15,19 @@
 <body>
     <!-- <div id="particles-js"></div> -->
     <header>
+        <nav>
+            <a href="./index.html" class="logo">Jiwon's gallery</a>
+            <ul>
+                <li><a href="../index.html" class="floating-btn">BACK TO PORTFOLIO</a></li>
+                <li><a href="../index.html#contact" class="floating-btn">CONTACT</a></li>
+            </ul>
+        </nav>
     </header>
     <main>
-        <div class="title">
+        <!-- <div class="title">
             <h1>Jiwon's Gallery</h1>
             <p>모든 작업물을 한 곳에 모았습니다.</p>
-        </div>
+        </div> -->
         <div class="tab">
             <div class="tab-activebg"></div>
 
@@ -32,9 +39,9 @@
         </div>
         <div class="list" data-filter="all">
             <article class="gallery-item" data-category="publishing design" data-year="2018">
-                <a href="#">
+                <a href="./detailpage/2018_portfolio/index.html">
                     <div class="gallery-thumb">
-                        <img src="./img/2018_portfolio/thumb.png" >
+                        <img src="./detailpage/2018_portfolio/img/thumb.png">
                     </div>
                     <div class="gallery-meta">
                         <span class="gallery-year">2018</span>
@@ -46,7 +53,7 @@
             <article class="gallery-item" data-category="design" data-year="2014">
                 <a href="#">
                     <div class="gallery-thumb">
-                        <img src="./images/gallery/audien-thumb.jpg" >
+                        <img src="./detailpage/2014_lighthouse/img/thumb.png">
                     </div>
                     <div class="gallery-meta">
                         <span class="gallery-year">2014</span>
@@ -58,7 +65,7 @@
             <article class="gallery-item" data-category="publishing" data-year="2024">
                 <a href="#">
                     <div class="gallery-thumb">
-                        <img src="./images/gallery/btime-thumb.jpg" >
+                        <img src="./images/gallery/btime-thumb.jpg">
                     </div>
                     <div class="gallery-meta">
                         <span class="gallery-year">2024</span>
@@ -70,7 +77,7 @@
             <article class="gallery-item" data-category="design" data-year="2023">
                 <a href="#">
                     <div class="gallery-thumb">
-                        <img src="./images/gallery/audien-thumb.jpg" >
+                        <img src="./images/gallery/audien-thumb.jpg">
                     </div>
                     <div class="gallery-meta">
                         <span class="gallery-year">2023</span>
@@ -82,7 +89,7 @@
             <article class="gallery-item" data-category="project" data-year="2023">
                 <a href="#">
                     <div class="gallery-thumb">
-                        <img src="./images/gallery/audien-thumb.jpg" >
+                        <img src="./images/gallery/audien-thumb.jpg">
                     </div>
                     <div class="gallery-meta">
                         <span class="gallery-year">2023</span>
@@ -103,16 +110,13 @@
                     </div>
                 </a>
             </article>
-            
+
         </div>
         <div class="pagination"></div>
     </main>
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- tsParticles Stars -->
-    <script
-        src="https://cdn.jsdelivr.net/npm/@tsparticles/preset-stars@3/tsparticles.preset.stars.bundle.min.js"></script>
     <script defer src="./js/gallery.js"></script>
 </body>
 
