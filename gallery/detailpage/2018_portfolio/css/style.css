@@ -64,6 +64,7 @@ body main .contents .info {
   display: flex;
   flex-direction: column;
   gap: 40px;
+  max-width: 350px;
 }
 body main .contents .info .desc {
   display: flex;
@@ -93,5 +94,8 @@ body main .contents .info .btn-wrap a:hover {
   body main .contents .preview {
     border-right: none;
     border-bottom: 0.3px solid rgba(255, 255, 255, 0.1);
+  }
+  body main .contents .info {
+    max-width: inherit;
   }
 }/*# sourceMappingURL=style.css.map */

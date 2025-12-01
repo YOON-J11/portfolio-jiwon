@@ -84,6 +84,7 @@ body {
                 display: flex;
                 flex-direction: column;
                 gap: 40px;
+                max-width: 350px;
 
                 .desc {
                     display: flex;
@@ -122,6 +123,9 @@ body {
                 .preview{
                     border-right: none;
                     border-bottom: 0.3px solid $glass-border;
+                }
+                .info{
+                    max-width: inherit;
                 }
             }
         }
