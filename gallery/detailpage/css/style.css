@@ -58,18 +58,23 @@ body main .contents {
 body main .contents .preview {
   padding: 40px;
   border-right: 0.3px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1 1 auto;
 }
 body main .contents .info {
   padding: 40px;
   display: flex;
   flex-direction: column;
   gap: 40px;
-  max-width: 350px;
+  width: 350px;
+  flex: 0 0 350px;
 }
 body main .contents .info .desc {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
 }
 body main .contents .info .btn-wrap {
   display: flex;
@@ -109,6 +114,7 @@ body main .contents .info .btn-wrap .btn-view:hover svg {
     border-bottom: 0.3px solid rgba(255, 255, 255, 0.1);
   }
   body main .contents .info {
-    max-width: inherit;
+    width: inherit;
+    flex: inherit;
   }
 }/*# sourceMappingURL=style.css.map */

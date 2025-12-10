@@ -73,10 +73,13 @@ body {
 
         .contents {
             display: flex;
-
             .preview {
                 padding: 40px;
                 border-right: 0.3px solid $glass-border;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                flex: 1 1 auto;
             }
 
             .info {
@@ -84,12 +87,13 @@ body {
                 display: flex;
                 flex-direction: column;
                 gap: 40px;
-                max-width: 350px;
+                width: 350px;
+                flex: 0 0 350px;
 
                 .desc {
                     display: flex;
                     flex-direction: column;
-                    gap: 10px;
+                    gap: 20px;
                 }
 
                 .btn-wrap {
@@ -141,7 +145,8 @@ body {
                 }
 
                 .info {
-                    max-width: inherit;
+                    width: inherit;
+                    flex: inherit;
                 }
             }
         }
